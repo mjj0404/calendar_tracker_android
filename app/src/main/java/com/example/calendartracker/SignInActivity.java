@@ -3,20 +3,19 @@ package com.example.calendartracker;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 
-import com.example.calendartracker.Utility.Constants;
+import com.example.calendartracker.api.ApiClient;
+import com.example.calendartracker.api.ApiInterface;
+import com.example.calendartracker.model.Record;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -25,6 +24,13 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import java.util.List;
+import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -36,7 +42,7 @@ public class SignInActivity extends AppCompatActivity {
         new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
-
+            Log.d("TAGGG", "onActivityResult: ");
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
             handleSignInResult(task);
 
@@ -48,7 +54,19 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
+
+//        ApiClient.getInstance().getService().getRecords().enqueue(new Callback<List<Record>>() {
+//            @Override
+//            public void onResponse(Call<List<Record>> call, Response<List<Record>> response) {
+//                Log.d("TAGGG", "onResponse: ");
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Record>> call, Throwable t) {
+//                Log.d("TAGGG", "onFailure: ");
+//            }
+//        });
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.server_client_id))
@@ -63,6 +81,7 @@ public class SignInActivity extends AppCompatActivity {
                         new OnCompleteListener<GoogleSignInAccount>() {
                             @Override
                             public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
+                                Log.d("TAGGG", "onComplete: silent sign in");
                                 handleSignInResult(task);
                             }
                         });
@@ -91,12 +110,13 @@ public class SignInActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         // if getLastSignedInAccount returns non-null user is already signed in
-//        try {
-//            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-//            updateUI(account);
-//        } catch (Exception e) {
-//            Log.d("TAGGG", "signInResult:failed code=" + e.getMessage());
-//        }
+        try {
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+            Log.d("TAGGG", "onStart: getLastSignedInAccount");
+            updateUI(account);
+        } catch (Exception e) {
+            Log.d("TAGGG", "signInResult:failed code=" + e.getMessage());
+        }
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
@@ -112,6 +132,7 @@ public class SignInActivity extends AppCompatActivity {
         Log.d("TAGGG", "updateUI: " + account.getEmail());
         Log.d("TAGGG", "updateUI: " + account.getId());
         Log.d("TAGGG", "updateUI: " + account.getIdToken());
+
         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
         startActivity(intent);
     }

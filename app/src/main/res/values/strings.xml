@@ -3,5 +3,11 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <!--EVENT-->
+    <string name="event_recurring_n_times">\u0020times recurring event,\u0020</string>
+    <string name="event_gr_date">GR. :\u0020</string>
+    <string name="event_el_date">EL. :\u0020</string>
+
     <string name="server_client_id">963527123473-f4nfg4h0j1ta0m30i9m5h2ps4vl29pvi.apps.googleusercontent.com</string>
 </resources>

@@ -1,7 +1,28 @@
 <resources>
     <string name="app_name">Calendar Tracker</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_upcoming_event">Upcoming Events</string>
+    <string name="title_records">Records</string>
+    <string name="title_parse">Parse</string>
+
+    <!--EVENT-->
+    <string name="event_recurring_n_times">\u0020times recurring event,\u0020</string>
+    <!--EVENT & RECORD-->
+    <string name="gr_date">GR. :\u0020</string>
+    <string name="el_date">EL. :\u0020</string>
+
+    <!--EDIT RECORD-->
+    <string name="edit_record_name">Name</string>
+    <string name="edit_record_lunar_date">Lunar Date</string>
+    <string name="edit_record_is_leap_month">Leap Month</string>
+
+    <!--PARSE-->
+    <string name="parse_require_permission">The app needs an access to your calendar in order to
+        utilize parsing functionality. This can also be achieved by clicking below the
+        \'Go to Setting\' button and adding the Calendar permission manually.</string>
+    <string name="parse_request_permission">Grant Permission</string>
+    <string name="parse_goto_setting">Go To Setting</string>
+
+
+
     <string name="server_client_id">963527123473-f4nfg4h0j1ta0m30i9m5h2ps4vl29pvi.apps.googleusercontent.com</string>
 </resources>

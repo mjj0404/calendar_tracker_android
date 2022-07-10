@@ -1,4 +1,4 @@
-package com.example.calendartracker.ui.dashboard;
+package com.example.calendartracker.ui.event;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -35,7 +35,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         holder.dDayTextView.setText(record.getName());
         holder.gregorianTextView.setText(record.getName());
         holder.easternLunarTextView.setText(record.getName());
-
     }
 
     @Override
@@ -43,12 +42,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         return recordList.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setRecordList(List<Record> records) {
         this.recordList = records;
         notifyDataSetChanged();
     }
 
-    public class EventViewHolder extends RecyclerView.ViewHolder {
+    public static class EventViewHolder extends RecyclerView.ViewHolder {
 
         private TextView nameTextView;
         private TextView eventNumberTextView;

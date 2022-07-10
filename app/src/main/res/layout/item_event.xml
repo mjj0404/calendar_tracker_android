@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    app:cardCornerRadius="20dp"
+    app:cardCornerRadius="10dp"
 
     android:innerRadius="0dp"
     android:shape="ring"
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/event_gr_date" />
+                android:text="@string/gr_date" />
 
             <TextView
                 android:id="@+id/event_gr_date"
@@ -79,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/event_el_date" />
+                android:text="@string/el_date" />
 
             <TextView
                 android:id="@+id/event_el_date"

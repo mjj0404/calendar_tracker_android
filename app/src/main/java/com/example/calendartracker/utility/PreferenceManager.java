@@ -1,7 +1,16 @@
 package com.example.calendartracker.utility;
 
+import static com.example.calendartracker.utility.Constants.EVENT_ID;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class PreferenceManager {
     private static final String PREF_NAME = "com.example.app.PREF_NAME";
@@ -26,6 +35,35 @@ public class PreferenceManager {
                     " is not initialized, call initializeInstance(..) method first.");
         }
         return instance;
+    }
+
+    public Map<String, Long> loadEventHashMap() {
+        Map<String, Long> outputMap = new HashMap<>();
+        try {
+            if (pref != null) {
+                String jsonString = pref.getString(EVENT_ID, (new JSONObject()).toString());
+                JSONObject jsonObject = new JSONObject(jsonString);
+                Iterator<String> keysItr = jsonObject.keys();
+                while (keysItr.hasNext()) {
+                    String key = keysItr.next();
+                    outputMap.put(key, jsonObject.getLong(key));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return outputMap;
+    }
+
+    private void storeEventHashMap(Map<String, Long> inputMap) {
+        if (pref != null) {
+            JSONObject jsonObject = new JSONObject(inputMap);
+            String jsonString = jsonObject.toString();
+            SharedPreferences.Editor editor = pref.edit();
+            editor.remove(EVENT_ID).apply();
+            editor.putString(EVENT_ID, jsonString);
+            editor.apply();
+        }
     }
 
     public void setValue(long value) {

@@ -17,7 +17,6 @@ public interface ApiInterface{
     @GET("/me/event")
     Call<List<Record>> getUserRecordByLunarDate(@Header("Authorization") String auth);
 
-    @Headers({"Content-Type: application/json;charset=UTF-8"})
     @GET("/me")
     Call<List<Record>> getUserRecord(@Header("Authorization") String auth);
 

@@ -20,29 +20,19 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/event_name"
+            android:id="@+id/record_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Name" />
 
-        <LinearLayout
+
+
+        <TextView
+            android:id="@+id/record_d_day"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/event_recurring_n_times"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/event_recurring_n_times" />
-
-            <TextView
-                android:id="@+id/event_d_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="D-day" />
 
 
         <LinearLayout
@@ -54,10 +44,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/event_gr_date" />
+                android:text="@string/gr_date" />
 
             <TextView
-                android:id="@+id/event_gr_date"
+                android:id="@+id/record_gr_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -73,10 +63,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/event_el_date" />
+                android:text="@string/el_date" />
 
             <TextView
-                android:id="@+id/event_el_date"
+                android:id="@+id/record_el_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

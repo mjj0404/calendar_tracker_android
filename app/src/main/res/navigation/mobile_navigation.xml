@@ -3,23 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_upcoming_event">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.calendartracker.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_upcoming_event"
+        android:name="com.example.calendartracker.ui.event.EventFragment"
+        android:label="@string/title_upcoming_event"
+        tools:layout="@layout/fragment_event" >
+        <action
+            android:id="@+id/action_navigation_upcoming_event_to_navigation_edit_record"
+            app:destination="@id/navigation_edit_record" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.calendartracker.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_records"
+        android:name="com.example.calendartracker.ui.record.RecordFragment"
+        android:label="@string/title_records"
+        tools:layout="@layout/fragment_record" >
+        <action
+            android:id="@+id/action_navigation_records_to_navigation_edit_record"
+            app:destination="@id/navigation_edit_record" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.calendartracker.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_parse"
+        android:name="com.example.calendartracker.ui.parse.ParseFragment"
+        android:label="@string/title_parse"
+        tools:layout="@layout/fragment_parse" />
+
+    <fragment
+        android:id="@+id/navigation_edit_record"
+        android:name="com.example.calendartracker.ui.record.EditRecordFragment"
+        tools:layout="@layout/fragment_edit_record" >
+    </fragment>
 </navigation>

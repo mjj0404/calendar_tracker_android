@@ -14,6 +14,11 @@
     <string name="edit_record_name">Name</string>
     <string name="edit_record_lunar_date">Lunar Date</string>
     <string name="edit_record_is_leap_month">Leap Month</string>
+    <string name="edit_record_date_format">YYYY/MM/DD</string>
+    <string name="edit_record_save">Save</string>
+    <string name="edit_record_empty_name_field">Event name cannot be empty</string>
+    <string name="edit_record_invalid_date">Invalid date entered. Use YYYY/MM/DD format and check
+        for correct leap month.</string>
 
     <!--PARSE-->
     <string name="parse_require_permission">The app needs an access to your calendar in order to

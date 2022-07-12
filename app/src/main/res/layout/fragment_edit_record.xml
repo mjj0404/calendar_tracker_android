@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     tools:context=".ui.record.EditRecordFragment">
 
 
@@ -20,29 +21,44 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:hint="@string/edit_record_name" />
+
+    <TextView
+        android:id="@+id/edit_record_name_warning_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:visibility="invisible"
+        android:text="@string/edit_record_empty_name_field" />
 
     <TextView
         android:id="@+id/edit_record_lunar_date_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="@string/edit_record_lunar_date" />
 
-    <EditText
+    <com.vicmikhailau.maskededittext.MaskedEditText
         android:id="@+id/edit_record_lunar_date_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        app:mask="####/##/##"
         android:inputType="number"
-        android:text="Name" />
+        android:hint="@string/edit_record_date_format" />
 
-
-
+    <TextView
+        android:id="@+id/edit_record_invalid_date_warning_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:textColor="@color/red" />
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/edit_record_leap_month_switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="@string/edit_record_is_leap_month"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 

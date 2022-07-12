@@ -9,6 +9,8 @@ import com.example.calendartracker.api.ApiClient;
 import com.example.calendartracker.api.ApiInterface;
 import com.example.calendartracker.model.Record;
 
+import org.checkerframework.checker.units.qual.C;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +22,8 @@ public class RecordRepository {
 
     private MutableLiveData<List<Record>> allRecordList = new MutableLiveData<>();
     private MutableLiveData<List<Record>> upcomingEventListLiveData = new MutableLiveData<>();
-    private List<Record> upcomingEventList = new ArrayList<>();
     private MutableLiveData<List<Record>> recordListLiveData = new MutableLiveData<>();
+    private MutableLiveData<Record> record = new MutableLiveData<>();
 
     public RecordRepository () {}
 
@@ -72,26 +74,6 @@ public class RecordRepository {
         });
     }
 
-    public List<Record> getUpcomingEventList() {
-        return upcomingEventList;
-    }
-
-    public void getUpcomingEventListWithToken(String idToken) {
-        ApiClient.getInstance().getService().getUserRecordByLunarDate(idToken).enqueue(new Callback<List<Record>>() {
-            @Override
-            public void onResponse(Call<List<Record>> call, Response<List<Record>> response) {
-                upcomingEventList.clear();
-                assert response.body() != null;
-                upcomingEventList.addAll(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<List<Record>> call, Throwable t) {
-
-            }
-        });
-    }
-
     public LiveData<List<Record>> getRecordListLiveData() {
         return recordListLiveData;
     }
@@ -108,6 +90,24 @@ public class RecordRepository {
             @Override
             public void onFailure(Call<List<Record>> call, Throwable t) {
                 recordListLiveData.postValue(null);
+            }
+        });
+    }
+
+    public LiveData<Record> getRecordLiveData() {
+        return record;
+    }
+
+    public void getRecord(int recordid) {
+        ApiClient.getInstance().getService().getRecord(recordid).enqueue(new Callback<Record>() {
+            @Override
+            public void onResponse(Call<Record> call, Response<Record> response) {
+                record.postValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Record> call, Throwable t) {
+
             }
         });
     }

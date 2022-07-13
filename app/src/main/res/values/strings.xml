@@ -7,15 +7,18 @@
     <!--EVENT-->
     <string name="event_recurring_n_times">\u0020times recurring event,\u0020</string>
     <!--EVENT & RECORD-->
-    <string name="gr_date">GR. :\u0020</string>
-    <string name="el_date">EL. :\u0020</string>
+    <string name="gr_date">Gregorian Date :\u0020</string>
+    <string name="el_date">Eastern Lunar Date :\u0020</string>
 
     <!--EDIT RECORD-->
+    <string name="edit_record_add">Add New Record</string>
+    <string name="edit_record_edit">Edit Record</string>
     <string name="edit_record_name">Name</string>
     <string name="edit_record_lunar_date">Lunar Date</string>
     <string name="edit_record_is_leap_month">Leap Month</string>
     <string name="edit_record_date_format">YYYY/MM/DD</string>
     <string name="edit_record_save">Save</string>
+    <string name="edit_record_delete">Delete</string>
     <string name="edit_record_empty_name_field">Event name cannot be empty</string>
     <string name="edit_record_invalid_date">Invalid date entered. Use YYYY/MM/DD format and check
         for correct leap month.</string>

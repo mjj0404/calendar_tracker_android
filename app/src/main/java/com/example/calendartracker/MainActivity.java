@@ -53,4 +53,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
 }

@@ -1,8 +1,10 @@
 package com.example.calendartracker.ui.parse;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import com.example.calendartracker.R;
 import com.example.calendartracker.databinding.FragmentParseBinding;
 import com.example.calendartracker.utility.CalendarQueryHandler;
 import com.example.calendartracker.utility.Constants;
+import com.example.calendartracker.utility.AlertDialogWithListener;
 import com.example.calendartracker.viewmodel.MainViewModel;
 
 
@@ -65,8 +68,26 @@ public class ParseFragment extends Fragment implements View.OnClickListener{
                             shouldShowRequestPermissionRationale(Constants.PERMISSIONS[1])) {
                         Log.d("MAGG", "onActivityResult: elseif");
                     }
-                    else {
+                    else if (!viewModel.isPermissionGranted(result.values())) {
                         Log.d("MAGG", "onActivityResult: else");
+                        AlertDialogWithListener dialog = new AlertDialogWithListener(
+                                requireActivity(),
+                                Constants.DIALOG_PERMISSION,
+                                new AlertDialogWithListener.DialogOnClickListener() {
+                                    @Override
+                                    public void onConfirmClick() {
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+                                        intent.setData(uri);
+                                        startActivity(intent);
+                                    }
+
+                                    @Override
+                                    public void onCancelClick() { }
+                                }
+                        );
+                        dialog.onCreateDialog(null).show();
                     }
 
                 }
@@ -108,6 +129,7 @@ public class ParseFragment extends Fragment implements View.OnClickListener{
         askPermissionButton = view.findViewById(R.id.parse_ask_permission_button);
         goToSettingButton = view.findViewById(R.id.parse_goto_setting_button);
         testButton = view.findViewById(R.id.parse_test_button);
+
         askPermissionButton.setOnClickListener(this);
         goToSettingButton.setOnClickListener(this);
         testButton.setOnClickListener(this);
@@ -126,11 +148,11 @@ public class ParseFragment extends Fragment implements View.OnClickListener{
             requestPermissionLauncher.launch(Constants.PERMISSIONS);
         }
         else if (view.getId() == R.id.parse_goto_setting_button) {
-//            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
-//            intent.setData(uri);
-//            startActivity(intent);
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+            intent.setData(uri);
+            startActivity(intent);
         }
         else if (view.getId() == R.id.parse_test_button) {
 //            addEvent("Hehe","",1657238400000l ,1657324800000l);

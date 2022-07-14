@@ -2,12 +2,17 @@ package com.example.calendartracker;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.example.calendartracker.utility.PreferenceManager;
 import com.example.calendartracker.viewmodel.MainViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuProvider;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -40,14 +45,19 @@ public class MainActivity extends AppCompatActivity {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_upcoming_event, R.id.navigation_records, R.id.navigation_parse)
                 .build();
+        Log.d("MAGG", "onCreate before: " + getSupportActionBar().getTitle());
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        Log.d("MAGG", "onCreate after: " + getSupportActionBar().getTitle());
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
         NavigationUI.setupWithNavController(binding.navView, navController);
 
     }
 
-
-
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
 
 
 }

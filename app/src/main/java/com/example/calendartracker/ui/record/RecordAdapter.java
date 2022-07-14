@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,11 +17,48 @@ import com.example.calendartracker.model.Record;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordViewHolder> {
+public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordViewHolder> implements Filterable {
+
+    private static final String TAG = "RVADAPTER";
 
     private List<Record> recordList = new ArrayList<>();
+    private List<Record> recordListFiltered = new ArrayList<>();
     private final OnItemClickListener listener;
+    private Filter recordFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<Record> filteredList = new ArrayList<>();
+            if (charSequence == null || charSequence.length() == 0) {
+                filteredList.addAll(recordListFiltered);
+            }
+            else {
+                Log.d(TAG, "performFiltering: ");
+                String stringFilter = charSequence.toString().toLowerCase().trim();
+                for (Record record:recordListFiltered) {
+                    if (record.getName().toLowerCase().trim().contains(stringFilter)) {
+                        filteredList.add(record);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            recordList.clear();
+            recordList.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    @Override
+    public Filter getFilter() {
+        return recordFilter;
+    }
 
     public interface OnItemClickListener {
         void onItemClick(Record record);
@@ -46,9 +85,10 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         return recordList.size();
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+
     public void setRecordList(List<Record> records) {
         this.recordList = records;
+        recordListFiltered = new ArrayList<>(records);
         notifyDataSetChanged();
     }
 

@@ -10,9 +10,6 @@
         android:name="com.example.calendartracker.ui.event.EventFragment"
         android:label="@string/title_upcoming_event"
         tools:layout="@layout/fragment_event" >
-        <action
-            android:id="@+id/action_navigation_upcoming_event_to_navigation_edit_record"
-            app:destination="@id/navigation_edit_record" />
     </fragment>
 
     <fragment
@@ -35,5 +32,8 @@
         android:id="@+id/navigation_edit_record"
         android:name="com.example.calendartracker.ui.record.EditRecordFragment"
         tools:layout="@layout/fragment_edit_record" >
+        <action
+            android:id="@+id/action_navigation_edit_record_to_navigation_records"
+            app:destination="@id/navigation_records" />
     </fragment>
 </navigation>

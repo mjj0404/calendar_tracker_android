@@ -7,20 +7,37 @@
     <!--EVENT-->
     <string name="event_recurring_n_times">\u0020times recurring event,\u0020</string>
     <!--EVENT & RECORD-->
-    <string name="gr_date">GR. :\u0020</string>
-    <string name="el_date">EL. :\u0020</string>
+    <string name="gr_date">Gregorian Date :\u0020</string>
+    <string name="el_date">Eastern Lunar Date :\u0020</string>
 
     <!--EDIT RECORD-->
+    <string name="edit_record_add">Add New Record</string>
+    <string name="edit_record_edit">Edit Record</string>
     <string name="edit_record_name">Name</string>
     <string name="edit_record_lunar_date">Lunar Date</string>
     <string name="edit_record_is_leap_month">Leap Month</string>
+    <string name="edit_record_date_format">YYYY/MM/DD</string>
+    <string name="edit_record_save">Save</string>
+    <string name="edit_record_empty_name_field">Event name cannot be empty</string>
+    <string name="edit_record_invalid_date">Invalid date entered. Use YYYY/MM/DD format and check
+        for correct leap month.</string>
+    <string name="edit_record_delete">Delete</string>
+    <string name="edit_record_user_added">Added %1$s</string>
+    <string name="edit_record_user_deleted">Deleted %1$s</string>
 
     <!--PARSE-->
-    <string name="parse_require_permission">The app needs an access to your calendar in order to
-        utilize parsing functionality. This can also be achieved by clicking below the
-        \'Go to Setting\' button and adding the Calendar permission manually.</string>
+    <string name="parse_require_permission">In order to parse upcoming events to your calendar,
+        the app requires your permission to the calendar access. Would you like to go to Setting
+        and give the permission manually?</string>
     <string name="parse_request_permission">Grant Permission</string>
     <string name="parse_goto_setting">Go To Setting</string>
+
+    <!--ETC-->
+    <string name="etc_yes">Yes</string>
+    <string name="etc_no">No</string>
+    <string name="etc_ok">Ok</string>
+    <string name="etc_cancel">Cancel</string>
+    <string name="etc_ask_delete_confirmation">Are you sure you wish to delete %1$s?</string>
 
 
 

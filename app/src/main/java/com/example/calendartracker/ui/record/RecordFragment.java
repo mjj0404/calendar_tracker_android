@@ -58,19 +58,7 @@ public class RecordFragment extends Fragment {
         adapter = new RecordAdapter(new RecordAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Record record) {
-                NavHostFragment navHostFragment = (NavHostFragment) requireActivity().
-                        getSupportFragmentManager().
-                        findFragmentById(R.id.nav_host_fragment_activity_main);
-
-                NavController controller = Objects.requireNonNull(navHostFragment).getNavController();
-
-                NavDirections action =
-                        RecordFragmentDirections.actionNavigationRecordsToNavigationEditRecord();
-
-                Bundle bundle = new Bundle();
-                bundle.putInt(Constants.RECORD_ID, record.getRecordid());
-                controller.navigate(R.id.action_navigation_records_to_navigation_edit_record, bundle);
-
+                navigateToEditRecord(record.getRecordid());
             }
         });
         RecyclerView recyclerView = binding.recordRecyclerview;
@@ -95,26 +83,12 @@ public class RecordFragment extends Fragment {
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String s) {
-                        Log.d(TAG, "onQueryTextSubmit: " + s);
                         return false;
                     }
 
                     @Override
                     public boolean onQueryTextChange(String s) {
-                        Log.d(TAG, "onQueryTextChange: " + s);
                         adapter.getFilter().filter(s);
-                        return false;
-                    }
-                });
-
-                searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-                    @Override
-                    public boolean onMenuItemActionExpand(MenuItem menuItem) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onMenuItemActionCollapse(MenuItem menuItem) {
                         return false;
                     }
                 });
@@ -123,19 +97,9 @@ public class RecordFragment extends Fragment {
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.menu_item_add) {
-                    NavHostFragment navHostFragment = (NavHostFragment) requireActivity().
-                            getSupportFragmentManager().
-                            findFragmentById(R.id.nav_host_fragment_activity_main);
-
-                    NavController controller = Objects.requireNonNull(navHostFragment).getNavController();
-                    NavDirections actions = RecordFragmentDirections.
-                            actionNavigationRecordsToNavigationEditRecord();
-                    Log.d(TAG, "onMenuItemSelected: ");
-
-                    controller.navigate(actions);
+                    navigateToEditRecord(-1);
                     return true;
                 }
-
                 return false;
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
@@ -144,55 +108,26 @@ public class RecordFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Log.d(TAG, "onViewCreated: ");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart: ");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: ");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop: ");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy: ");
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-//        requireActivity().addMenuProvider(new MenuProvider() {
-//            @Override
-//            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
-//                menu.clear();
-//            }
-//
-//            @Override
-//            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
-//                return false;
-//            }
-//        });
+    }
+
+    private void navigateToEditRecord(int recordid) {
+        NavHostFragment navHostFragment = (NavHostFragment) requireActivity().
+                getSupportFragmentManager().
+                findFragmentById(R.id.nav_host_fragment_activity_main);
+
+        NavController controller = Objects.requireNonNull(navHostFragment).getNavController();
+
+        if (recordid == -1) {
+            // no bundle to pass on with navigation
+            controller.navigate(R.id.action_navigation_records_to_navigation_edit_record);
+        }
+        else {
+            Bundle bundle = new Bundle();
+            bundle.putInt(Constants.RECORD_ID, recordid);
+            controller.navigate(R.id.action_navigation_records_to_navigation_edit_record, bundle);
+        }
     }
 }

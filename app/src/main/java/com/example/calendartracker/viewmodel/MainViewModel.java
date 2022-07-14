@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.calendartracker.api.ApiClient;
 import com.example.calendartracker.model.Lunar;
 import com.example.calendartracker.model.Record;
 import com.example.calendartracker.model.Solar;
@@ -19,12 +20,20 @@ import com.example.calendartracker.utility.Constants;
 import com.example.calendartracker.utility.LunarSolarConverter;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.Api;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainViewModel extends AndroidViewModel {
+
+    private static final String TAG = "ViewModel";
 
     @SuppressLint("StaticFieldLeak")
     private final Context context = getApplication().getApplicationContext();
@@ -92,12 +101,53 @@ public class MainViewModel extends AndroidViewModel {
         repository.getRecord(recordid);
     }
 
-    public void setRecord() {
+    //==================================DELETE=================================================
 
+    public void deleteRecord(int recordid) {
+        ApiClient.getInstance().getService().deleteRecord(recordid).enqueue(new Callback<Record>() {
+            @Override
+            public void onResponse(Call<Record> call, Response<Record> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Record> call, Throwable t) {
+
+            }
+        });
     }
 
-    public void updateRecord() {
+    //==================================CREATE=================================================
 
+    public void createRecord(String name, int calendarid) {
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplication().getApplicationContext());
+        ApiClient.getInstance().getService().createRecord(account.getId(), name, calendarid).enqueue(new Callback<Record>() {
+            @Override
+            public void onResponse(Call<Record> call, Response<Record> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Record> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //==================================UPDATE=================================================
+
+    public void updateRecord(int recordid, String name, int calendarid) {
+        ApiClient.getInstance().getService().updateRecord(recordid, name, calendarid).enqueue(new Callback<Record>() {
+            @Override
+            public void onResponse(Call<Record> call, Response<Record> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Record> call, Throwable t) {
+
+            }
+        });
     }
 
     public List<Integer> inputValidation (String name, String date, boolean isLeap) {

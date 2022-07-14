@@ -6,12 +6,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.calendartracker.api.ApiClient;
-import com.example.calendartracker.api.ApiInterface;
 import com.example.calendartracker.model.Record;
+import com.google.android.gms.common.api.Api;
 
-import org.checkerframework.checker.units.qual.C;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -103,6 +100,38 @@ public class RecordRepository {
             @Override
             public void onResponse(Call<Record> call, Response<Record> response) {
                 record.postValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Record> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //==================================UPDATE=================================================
+
+    public void updateRecord(int recordid, String name, int calendarid) {
+        ApiClient.getInstance().getService().updateRecord(recordid, name, calendarid).enqueue(new Callback<Record>() {
+            @Override
+            public void onResponse(Call<Record> call, Response<Record> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Record> call, Throwable t) {
+
+            }
+        });
+    }
+
+    //==================================CREATE=================================================
+
+    public void createRecord( String externid, String name, int calendarid) {
+        ApiClient.getInstance().getService().createRecord(externid, name, calendarid).enqueue(new Callback<Record>() {
+            @Override
+            public void onResponse(Call<Record> call, Response<Record> response) {
+
             }
 
             @Override

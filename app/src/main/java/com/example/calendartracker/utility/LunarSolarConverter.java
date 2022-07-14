@@ -173,4 +173,22 @@ public class LunarSolarConverter {
         lunar.lunarDay = lunarD;
         return lunar;
     }
+
+    public static long LunarToInt(Lunar lunar) {
+        Solar s = LunarToSolar(lunar);
+        return SolarToInt(s.solarYear,
+                s.solarMonth,
+                s.solarDay);
+    }
+
+    public static long LunarToInt(String date, boolean isLeap) {
+        if (date.length() == 8) {
+            Lunar lunar = new Lunar(Integer.parseInt(date.substring(0, 4)),
+                    Integer.parseInt(date.substring(4, 6)),
+                    Integer.parseInt(date.substring(6)),
+                    isLeap);
+            return LunarToInt(lunar);
+        }
+        else return -1L;
+    }
 }

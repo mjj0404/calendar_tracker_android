@@ -1,13 +1,10 @@
 package com.example.calendartracker.utility;
 
-import static com.example.calendartracker.utility.Constants.EVENT_ID;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -41,12 +38,14 @@ public class PreferenceManager {
         Map<String, Long> outputMap = new HashMap<>();
         try {
             if (pref != null) {
-                String jsonString = pref.getString(EVENT_ID, (new JSONObject()).toString());
+                String jsonString = pref.getString(Constants.ID_MAP_RECORD_EVENT, (new JSONObject()).toString());
                 JSONObject jsonObject = new JSONObject(jsonString);
+
                 Iterator<String> keysItr = jsonObject.keys();
                 while (keysItr.hasNext()) {
                     String key = keysItr.next();
-                    outputMap.put(key, jsonObject.getLong(key));
+                    long value = jsonObject.getLong(key);
+                    outputMap.put(key, value);
                 }
             }
         } catch (Exception e) {
@@ -60,8 +59,8 @@ public class PreferenceManager {
             JSONObject jsonObject = new JSONObject(inputMap);
             String jsonString = jsonObject.toString();
             SharedPreferences.Editor editor = pref.edit();
-            editor.remove(EVENT_ID).apply();
-            editor.putString(EVENT_ID, jsonString);
+            editor.remove(Constants.ID_MAP_RECORD_EVENT).apply();
+            editor.putString(Constants.ID_MAP_RECORD_EVENT, jsonString);
             editor.apply();
         }
     }

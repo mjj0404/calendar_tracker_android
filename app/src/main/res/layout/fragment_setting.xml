@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    tools:context=".ui.parse.SettingFragment">
+
+
+    <TextView
+        android:id="@+id/setting_theme_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/setting_theme" />
+
+    <RadioGroup
+        android:id="@+id/setting_theme_radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+            android:id="@+id/setting_system_theme_radiobutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_theme_system" />
+
+        <RadioButton
+            android:id="@+id/setting_light_theme_radiobutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_theme_light" />
+
+        <RadioButton
+            android:id="@+id/setting_dark_theme_radiobutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_theme_dark" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/setting_upload_event_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/setting_uploading_event" />
+
+    <Switch
+        android:id="@+id/setting_reminder_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/setting_add_reminder"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <LinearLayout
+        android:id="@+id/setting_reminder_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/setting_remind_me_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/setting_remind_me" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <RadioButton
+                android:id="@+id/setting_before_day_radiobutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_before_day" />
+
+            <RadioButton
+                android:id="@+id/setting_before_hour_radiobutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_before_hour" />
+        </RadioGroup>
+    </LinearLayout>
+
+</LinearLayout>

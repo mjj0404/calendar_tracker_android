@@ -15,10 +15,13 @@ import com.example.calendartracker.R;
 
 public class AlertDialogWithListener extends DialogFragment {
 
-    private Context context;
+    private final Context context;
+    private final DialogOnClickListener listener;
+    private final int operation;
+    private boolean showOnlyPositive = false;
+
     private String name;
-    private DialogOnClickListener listener;
-    private int operation;
+
     private static final String TAG = "Confirmation";
 
     public interface DialogOnClickListener {
@@ -48,26 +51,33 @@ public class AlertDialogWithListener extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         String message = "";
         switch (operation) {
-            case Constants.DIALOG_PERMISSION:
-                message = context.getString(R.string.parse_require_permission);
+            case Constants.DIALOG_PERMISSION_LONG:
+                message = context.getString(R.string.parse_require_permission_long);
+                break;
+            case Constants.DIALOG_PERMISSION_SHORT:
+                message = context.getString(R.string.parse_require_permission_short);
+                showOnlyPositive = true;
+                break;
+            case Constants.DIALOG_CREATE_EVENT:
+                message = context.getString(R.string.parse_create_event_confirmation);
                 break;
             case Constants.DIALOG_DELETE_CONFIRMATION:
                 message = context.getString(R.string.etc_ask_delete_confirmation, name);
                 break;
         }
-        builder.setMessage(message)
-                .setPositiveButton(R.string.etc_ok, new DialogInterface.OnClickListener() {
+        builder.setMessage(message).setPositiveButton(R.string.etc_ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // START THE GAME!
                         listener.onConfirmClick();
                     }
-                })
-                .setNegativeButton(R.string.etc_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        listener.onCancelClick();
-                    }
                 });
-        // Create the AlertDialog object and return it
+        if (!showOnlyPositive) {
+            builder.setMessage(message).setNegativeButton(R.string.etc_cancel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    listener.onCancelClick();
+                }
+            });
+        }
         return builder.create();
     }
 

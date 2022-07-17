@@ -1,6 +1,7 @@
 package com.example.calendartracker.api;
 
 import com.example.calendartracker.model.Record;
+import com.example.calendartracker.model.User;
 
 import java.util.List;
 
@@ -16,14 +17,20 @@ import retrofit2.http.Path;
 
 public interface ApiInterface{
 
-    @GET("/record")
-    Call<List<Record>> getRecords();
     //==================================DELETE=================================================
+
+    @DELETE("/user/delete/{externid}")
+    Call<User> deleteUser(@Path("externid") String externid);
 
     @DELETE("/record/delete/{recordid}")
     Call<Record> deleteRecord(@Path("recordid") int recordid);
 
     //==================================CREATE=================================================
+
+    @FormUrlEncoded
+    @POST("/user/create")
+    Call<User> createUser(@Field("email") String email,
+                          @Field("externid") String externid);
 
     @FormUrlEncoded
     @POST("/record/create")

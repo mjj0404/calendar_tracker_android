@@ -24,9 +24,9 @@
 
     <fragment
         android:id="@+id/navigation_parse"
-        android:name="com.example.calendartracker.ui.parse.ParseFragment"
+        android:name="com.example.calendartracker.ui.parse.SettingFragment"
         android:label="@string/title_parse"
-        tools:layout="@layout/fragment_parse" />
+        tools:layout="@layout/fragment_setting" />
 
     <fragment
         android:id="@+id/navigation_edit_record"

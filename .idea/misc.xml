@@ -6,6 +6,7 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.15767386091127097" />
         <entry key="app/src/main/res/drawable/avd_anim.xml" value="0.141" />
         <entry key="app/src/main/res/drawable/avd_anim_calendar.xml" value="0.141" />
+        <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.142" />
         <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.163" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.163" />
         <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.163" />
@@ -14,13 +15,16 @@
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.15364583333333334" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.11927083333333334" />
         <entry key="app/src/main/res/layout/fragment_edit_record.xml" value="0.24365942028985507" />
+        <entry key="app/src/main/res/layout/fragment_event_parse_help.xml" value="0.13177083333333334" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3140625" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_parse.xml" value="0.3140625" />
         <entry key="app/src/main/res/layout/fragment_record.xml" value="0.15364583333333334" />
+        <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.23641304347826086" />
         <entry key="app/src/main/res/layout/item_event.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_record.xml" value="0.25" />
         <entry key="app/src/main/res/menu/appbar_edit_record.xml" value="0.3140625" />
+        <entry key="app/src/main/res/menu/appbar_event.xml" value="0.19375" />
         <entry key="app/src/main/res/menu/appbar_records.xml" value="0.19375" />
         <entry key="app/src/main/res/menu/appbar_save_menu.xml" value="0.14791666666666667" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.153125" />

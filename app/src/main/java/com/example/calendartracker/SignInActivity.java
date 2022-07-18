@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import com.example.calendartracker.api.ApiClient;
 import com.example.calendartracker.api.ApiInterface;
 import com.example.calendartracker.model.Record;
+import com.example.calendartracker.utility.PreferenceManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -36,13 +38,14 @@ public class SignInActivity extends AppCompatActivity {
 
     private Button button;
     private GoogleSignInClient mGoogleSignInClient;
+    private static final String TAG = "MainActivity SignInActivity";
 
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
         new ActivityResultContracts.StartActivityForResult(),
         new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
-            Log.d("TAGGG", "onActivityResult: ");
+            Log.d(TAG, "onActivityResult: ");
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
             handleSignInResult(task);
 
@@ -59,12 +62,12 @@ public class SignInActivity extends AppCompatActivity {
 //        ApiClient.getInstance().getService().getRecords().enqueue(new Callback<List<Record>>() {
 //            @Override
 //            public void onResponse(Call<List<Record>> call, Response<List<Record>> response) {
-//                Log.d("TAGGG", "onResponse: ");
+//                Log.d(TAG, "onResponse: ");
 //            }
 //
 //            @Override
 //            public void onFailure(Call<List<Record>> call, Throwable t) {
-//                Log.d("TAGGG", "onFailure: ");
+//                Log.d(TAG, "onFailure: ");
 //            }
 //        });
 
@@ -81,7 +84,7 @@ public class SignInActivity extends AppCompatActivity {
                         new OnCompleteListener<GoogleSignInAccount>() {
                             @Override
                             public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
-                                Log.d("TAGGG", "onComplete: silent sign in");
+                                Log.d(TAG, "onComplete: silent sign in");
                                 handleSignInResult(task);
                             }
                         });
@@ -112,10 +115,10 @@ public class SignInActivity extends AppCompatActivity {
         // if getLastSignedInAccount returns non-null user is already signed in
         try {
             GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-            Log.d("TAGGG", "onStart: getLastSignedInAccount");
+            Log.d(TAG, "onStart: getLastSignedInAccount");
             updateUI(account);
         } catch (Exception e) {
-            Log.d("TAGGG", "signInResult:failed code=" + e.getMessage());
+            Log.d(TAG, "signInResult:failed code=" + e.getMessage());
         }
     }
 
@@ -124,14 +127,14 @@ public class SignInActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             updateUI(account);
         } catch (ApiException e) {
-            Log.d("TAGGG", "signInResult:failed code=" + e.getStatusCode());
+            Log.d(TAG, "signInResult:failed code=" + e.getStatusCode());
         }
     }
 
     private void updateUI(GoogleSignInAccount account) {
-        Log.d("TAGGG", "updateUI: " + account.getEmail());
-        Log.d("TAGGG", "updateUI: " + account.getId());
-        Log.d("TAGGG", "updateUI: " + account.getIdToken());
+        Log.d(TAG, "updateUI: " + account.getEmail());
+        Log.d(TAG, "updateUI: " + account.getId());
+        Log.d(TAG, "updateUI: " + account.getIdToken());
 
         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
         startActivity(intent);

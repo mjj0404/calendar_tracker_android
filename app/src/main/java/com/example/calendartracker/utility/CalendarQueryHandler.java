@@ -120,6 +120,7 @@ public class CalendarQueryHandler extends AsyncQueryHandler {
 //            String[] selectionArgs = new String[] {String.valueOf(calendarID)};
 
 //            startUpdate(EVENT, null, Events.CONTENT_URI, values, selection, selectionArgs);
+
         }
     }
 

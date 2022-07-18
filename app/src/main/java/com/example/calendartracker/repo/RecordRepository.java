@@ -29,26 +29,6 @@ public class RecordRepository {
         return allRecordList;
     }
 
-    public void getAllRecord() {
-        Call<List<Record>> call = ApiClient.getInstance().getService().getRecords();
-        call.enqueue(new Callback<List<Record>>() {
-            @Override
-            public void onResponse(Call<List<Record>> call, Response<List<Record>> response) {
-                Log.d("MAGG", "onResponse: ");
-                if (response.body() != null) {
-                    allRecordList.postValue(response.body());
-                }
-                else
-                    Log.d("MAGG", "onResponse: response.body() is null");
-            }
-
-            @Override
-            public void onFailure(Call<List<Record>> call, Throwable t) {
-                Log.d("MAGG", "onFailure: ");
-            }
-        });
-    }
-
     public LiveData<List<Record>> getUpcomingEventListLiveData() {
         Log.d("MAGG", "Repository getUpcomingEventListLiveData: ");
         return upcomingEventListLiveData;

@@ -1,13 +1,12 @@
 package com.example.calendartracker.utility;
 
-import static com.example.calendartracker.utility.Constants.EVENT_ID;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -41,12 +40,14 @@ public class PreferenceManager {
         Map<String, Long> outputMap = new HashMap<>();
         try {
             if (pref != null) {
-                String jsonString = pref.getString(EVENT_ID, (new JSONObject()).toString());
+                String jsonString = pref.getString(Constants.ID_MAP_RECORD_EVENT, (new JSONObject()).toString());
                 JSONObject jsonObject = new JSONObject(jsonString);
+
                 Iterator<String> keysItr = jsonObject.keys();
                 while (keysItr.hasNext()) {
                     String key = keysItr.next();
-                    outputMap.put(key, jsonObject.getLong(key));
+                    long value = jsonObject.getLong(key);
+                    outputMap.put(key, value);
                 }
             }
         } catch (Exception e) {
@@ -55,15 +56,51 @@ public class PreferenceManager {
         return outputMap;
     }
 
-    private void storeEventHashMap(Map<String, Long> inputMap) {
+    public void storeEventHashMap(Map<String, Long> inputMap) {
         if (pref != null) {
             JSONObject jsonObject = new JSONObject(inputMap);
             String jsonString = jsonObject.toString();
             SharedPreferences.Editor editor = pref.edit();
-            editor.remove(EVENT_ID).apply();
-            editor.putString(EVENT_ID, jsonString);
+            editor.remove(Constants.ID_MAP_RECORD_EVENT).apply();
+            editor.putString(Constants.ID_MAP_RECORD_EVENT, jsonString);
             editor.apply();
         }
+    }
+
+    public void setThemeChanged (boolean param) {
+        pref.edit().putBoolean(Constants.THEME_CONFIGURATION_CHANGED, param).apply();
+    }
+
+    public boolean isThemeChanged() {
+        if (pref.getBoolean(Constants.THEME_CONFIGURATION_CHANGED, false)) {
+            pref.edit().putBoolean(Constants.THEME_CONFIGURATION_CHANGED, false).apply();
+            return true;
+        }
+        return false;
+    }
+
+    public void setReminderSetting(int param) {
+        pref.edit().putInt(Constants.BEFORE_EVENT, param).apply();
+    }
+
+    public int getReminderSetting() {
+        return pref.getInt(Constants.BEFORE_EVENT, 0);
+    }
+
+    public void addReminder(boolean param) {
+        pref.edit().putBoolean(Constants.ADD_REMINDER_SELECTION, param).apply();
+    }
+
+    public boolean isAddingReminder() {
+        return pref.getBoolean(Constants.ADD_REMINDER_SELECTION, false);
+    }
+
+    public void setTheme(int param) {
+        pref.edit().putInt(Constants.THEME_SELECTION, param).apply();
+    }
+
+    public int getTheme() {
+        return pref.getInt(Constants.THEME_SELECTION, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
     }
 
     public void setValue(long value) {

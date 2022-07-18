@@ -55,7 +55,12 @@ public class EditRecordFragment extends Fragment implements TextWatcher{
         binding = FragmentEditRecordBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         viewModel.init();
+        return root;
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         binding.editRecordNameEditText.addTextChangedListener(this);
         binding.editRecordLunarDateEditText.addTextChangedListener(this);
 
@@ -131,12 +136,6 @@ public class EditRecordFragment extends Fragment implements TextWatcher{
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
-        return root;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         if (getArguments() != null) {
             ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle(R.string.edit_record_edit);
             isEditing = true;
@@ -153,7 +152,6 @@ public class EditRecordFragment extends Fragment implements TextWatcher{
                 }
             });
         }
-        ((AppCompatActivity) requireActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

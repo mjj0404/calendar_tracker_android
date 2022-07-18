@@ -3,6 +3,8 @@ package com.example.calendartracker.utility;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -54,7 +56,7 @@ public class PreferenceManager {
         return outputMap;
     }
 
-    private void storeEventHashMap(Map<String, Long> inputMap) {
+    public void storeEventHashMap(Map<String, Long> inputMap) {
         if (pref != null) {
             JSONObject jsonObject = new JSONObject(inputMap);
             String jsonString = jsonObject.toString();
@@ -63,6 +65,42 @@ public class PreferenceManager {
             editor.putString(Constants.ID_MAP_RECORD_EVENT, jsonString);
             editor.apply();
         }
+    }
+
+    public void setThemeChanged (boolean param) {
+        pref.edit().putBoolean(Constants.THEME_CONFIGURATION_CHANGED, param).apply();
+    }
+
+    public boolean isThemeChanged() {
+        if (pref.getBoolean(Constants.THEME_CONFIGURATION_CHANGED, false)) {
+            pref.edit().putBoolean(Constants.THEME_CONFIGURATION_CHANGED, false).apply();
+            return true;
+        }
+        return false;
+    }
+
+    public void setReminderSetting(int param) {
+        pref.edit().putInt(Constants.BEFORE_EVENT, param).apply();
+    }
+
+    public int getReminderSetting() {
+        return pref.getInt(Constants.BEFORE_EVENT, 0);
+    }
+
+    public void addReminder(boolean param) {
+        pref.edit().putBoolean(Constants.ADD_REMINDER_SELECTION, param).apply();
+    }
+
+    public boolean isAddingReminder() {
+        return pref.getBoolean(Constants.ADD_REMINDER_SELECTION, false);
+    }
+
+    public void setTheme(int param) {
+        pref.edit().putInt(Constants.THEME_SELECTION, param).apply();
+    }
+
+    public int getTheme() {
+        return pref.getInt(Constants.THEME_SELECTION, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
     }
 
     public void setValue(long value) {

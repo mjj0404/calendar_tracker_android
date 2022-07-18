@@ -6,5 +6,5 @@
         android:id="@+id/menu_item_parse"
         android:icon="@drawable/file_upload_48px"
         app:showAsAction="ifRoom"
-        android:title="@string/title_parse" />
+        android:title="@string/title_setting" />
 </menu>

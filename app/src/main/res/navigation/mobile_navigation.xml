@@ -10,6 +10,11 @@
         android:name="com.example.calendartracker.ui.event.EventFragment"
         android:label="@string/title_upcoming_event"
         tools:layout="@layout/fragment_event" >
+        <action
+            android:id="@+id/action_navigation_upcoming_event_to_navigation_setting"
+            app:destination="@id/navigation_setting"
+            app:popUpTo="@+id/navigation_upcoming_event"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -23,9 +28,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_parse"
-        android:name="com.example.calendartracker.ui.parse.SettingFragment"
-        android:label="@string/title_parse"
+        android:id="@+id/navigation_setting"
+        android:name="com.example.calendartracker.ui.setting.SettingFragment"
+        android:label="@string/title_setting"
         tools:layout="@layout/fragment_setting" />
 
     <fragment

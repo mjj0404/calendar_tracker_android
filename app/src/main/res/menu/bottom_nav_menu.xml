@@ -12,8 +12,8 @@
         android:title="@string/title_records" />
 
     <item
-        android:id="@+id/navigation_parse"
-        android:icon="@android:drawable/ic_menu_upload"
-        android:title="@string/title_parse" />
+        android:id="@+id/navigation_setting"
+        android:icon="@drawable/settings_48px"
+        android:title="@string/title_setting" />
 
 </menu>

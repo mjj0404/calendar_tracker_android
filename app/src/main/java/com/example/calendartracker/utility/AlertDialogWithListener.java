@@ -3,6 +3,7 @@ package com.example.calendartracker.utility;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -78,6 +79,8 @@ public class AlertDialogWithListener extends DialogFragment {
                 }
             });
         }
+        builder.setTitle(R.string.etc_warning);
+        builder.setIcon(R.drawable.warning_48px);
         return builder.create();
     }
 

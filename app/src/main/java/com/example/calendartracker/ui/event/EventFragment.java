@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -23,6 +24,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,12 +37,14 @@ import com.example.calendartracker.model.Solar;
 import com.example.calendartracker.utility.AlertDialogWithListener;
 import com.example.calendartracker.utility.Constants;
 import com.example.calendartracker.utility.LunarSolarConverter;
+import com.example.calendartracker.utility.PreferenceManager;
 import com.example.calendartracker.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class EventFragment extends Fragment {
 
@@ -118,21 +123,11 @@ public class EventFragment extends Fragment {
                 }
             });
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         Log.d("MAGG", "onCreateView: Dashboard Frag");
         binding = FragmentEventBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        adapter = new EventAdapter();
-        RecyclerView recyclerView = binding.eventRecyclerview;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         viewModel.init();
@@ -144,6 +139,17 @@ public class EventFragment extends Fragment {
                 upcomingEventList = records;
             }
         });
+        return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        adapter = new EventAdapter();
+        RecyclerView recyclerView = binding.eventRecyclerview;
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
 
         requireActivity().addMenuProvider(new MenuProvider() {
             @Override
@@ -160,12 +166,16 @@ public class EventFragment extends Fragment {
                 return false;
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
-        return root;
-    }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                Log.d(TAG, "handleOnBackPressed: ");
+//                requireActivity().finish();
+//                System.exit(0);
+//            }
+//        };
+//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
     }
 
     @Override

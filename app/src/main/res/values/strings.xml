@@ -2,7 +2,7 @@
     <string name="app_name">Calendar Tracker</string>
     <string name="title_upcoming_event">Upcoming Events</string>
     <string name="title_records">Records</string>
-    <string name="title_parse">Parse</string>
+    <string name="title_setting">Setting</string>
 
     <!--EVENT-->
     <string name="event_recurring_n_times">\u0020times recurring event,\u0020</string>
@@ -52,6 +52,7 @@
     <string name="etc_no">No</string>
     <string name="etc_ok">OK</string>
     <string name="etc_cancel">Cancel</string>
+    <string name="etc_warning">Warning</string>
     <string name="etc_ask_delete_confirmation">Are you sure you wish to delete %1$s?</string>
 
 

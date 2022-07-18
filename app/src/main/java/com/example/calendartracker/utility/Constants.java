@@ -20,4 +20,15 @@ public class Constants {
     public static final int DIALOG_PERMISSION_LONG = 10;
     public static final int DIALOG_CREATE_EVENT = 11;
     public static final int DIALOG_DELETE_CONFIRMATION = 12;
+
+    // ================================SETTING===============================================
+
+    public static final String ADD_REMINDER_SELECTION = "ADD_REMINDER_SELECTION";
+
+    public static final String THEME_SELECTION = "THEME_SELECTION";
+    public static final String THEME_CONFIGURATION_CHANGED = "THEME_CONFIGURATION_CHANGED";
+
+    public static final String BEFORE_EVENT = "BEFORE_EVENT";
+    public static final int REMIND_DAY_BEFORE = 0;
+    public static final int REMIND_HOUR_BEFORE = 1;
 }

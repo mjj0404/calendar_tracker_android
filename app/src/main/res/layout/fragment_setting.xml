@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_margin="20dp"
-    tools:context=".ui.parse.SettingFragment">
+    android:layout_margin="15dp"
+    tools:context=".ui.setting.SettingFragment">
 
 
     <TextView
@@ -57,6 +57,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:textSize="17sp"
         android:text="@string/setting_add_reminder"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
@@ -64,6 +65,7 @@
         android:id="@+id/setting_reminder_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="10dp"
         android:orientation="vertical">
 
         <TextView
@@ -75,6 +77,7 @@
             android:text="@string/setting_remind_me" />
 
         <RadioGroup
+            android:id="@+id/setting_remind_me_before_radiogroup"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 

@@ -37,6 +37,7 @@ import com.example.calendartracker.utility.AlertDialogWithListener;
 import com.example.calendartracker.utility.LunarSolarConverter;
 import com.example.calendartracker.viewmodel.MainViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -85,7 +86,7 @@ public class EditRecordFragment extends Fragment implements TextWatcher{
                 String actionMenuItem = "ActionMenuItem";
                 String recordName = binding.editRecordNameEditText.getText().toString();
                 if (menuItem.getItemId() == R.id.menu_item_save && isRecordInputValid()) {
-                    int calendarid = (int) LunarSolarConverter.LunarToInt(
+                    int calendarid = (int) LunarSolarConverter.lunarToInt(
                             Objects.requireNonNull(binding.editRecordLunarDateEditText.getUnMaskedText()),
                             binding.editRecordLeapMonthSwitch.isChecked());
                     if (isEditing) {
@@ -143,8 +144,8 @@ public class EditRecordFragment extends Fragment implements TextWatcher{
             viewModel.getRecordLiveData().observe(getViewLifecycleOwner(), new Observer<Record>() {
                 @Override
                 public void onChanged(Record record) {
-                    Solar solar = LunarSolarConverter.SolarFromInt(record.getCalendarid());
-                    Lunar lunar = LunarSolarConverter.SolarToLunar(solar);
+                    Solar solar = LunarSolarConverter.solarFromInt(record.getCalendarid());
+                    Lunar lunar = LunarSolarConverter.solarToLunar(solar);
 
                     binding.editRecordNameEditText.setText(record.getName());
                     binding.editRecordLunarDateEditText.setText(lunar.toString());
@@ -172,7 +173,7 @@ public class EditRecordFragment extends Fragment implements TextWatcher{
     }
 
     private boolean isRecordInputValid() {
-        List<Integer> result = viewModel.inputValidation(
+        List<Integer> result = inputValidation(
                 binding.editRecordNameEditText.getText().toString(),
                 binding.editRecordLunarDateEditText.getUnMaskedText(),
                 binding.editRecordLeapMonthSwitch.isChecked()
@@ -199,5 +200,27 @@ public class EditRecordFragment extends Fragment implements TextWatcher{
         NavDirections action =
                 EditRecordFragmentDirections.actionNavigationEditRecordToNavigationRecords();
         controller.navigate(action);
+    }
+
+    private List<Integer> inputValidation (String name, String date, boolean isLeap) {
+        List<Integer> result = new ArrayList<>();
+        if (name.isEmpty()) result.add(Constants.RECORD_INPUT_EMPTY_NAME);
+
+        if (date.length() == 8) {
+            Lunar lunar = new Lunar(Integer.parseInt(date.substring(0, 4)),
+                    Integer.parseInt(date.substring(4, 6)),
+                    Integer.parseInt(date.substring(6)),
+                    isLeap);
+            Lunar lunarRecalculated = LunarSolarConverter.solarToLunar(LunarSolarConverter.lunarToSolar(lunar));
+
+            if (!lunar.equals(lunarRecalculated)) {
+                result.add(Constants.RECORD_INPUT_INVALID_DATE);
+            }
+        }
+        else {
+            result.add(Constants.RECORD_INPUT_INVALID_DATE);
+        }
+        if (result.isEmpty()) result.add(Constants.RECORD_INPUT_VALID);
+        return result;
     }
 }

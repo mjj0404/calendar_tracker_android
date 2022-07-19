@@ -1,5 +1,7 @@
 package com.example.calendartracker.model;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -50,4 +52,12 @@ public class Record {
         this.externid = externid;
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(this.recordid).append(this.name)
+                .append(this.calendarid);
+        return builder.toString();
+    }
 }

@@ -12,21 +12,24 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.calendartracker.api.ApiClient;
+import com.example.calendartracker.model.Event;
 import com.example.calendartracker.model.Lunar;
 import com.example.calendartracker.model.Record;
-import com.example.calendartracker.model.Solar;
 import com.example.calendartracker.model.User;
 import com.example.calendartracker.repo.RecordRepository;
+import com.example.calendartracker.utility.CalendarQueryHandler;
 import com.example.calendartracker.utility.Constants;
 import com.example.calendartracker.utility.LunarSolarConverter;
+import com.example.calendartracker.utility.PreferenceManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.api.Api;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -90,6 +93,32 @@ public class MainViewModel extends AndroidViewModel {
 
     public void getRecord(int recordid) {
         repository.getRecord(recordid);
+    }
+
+    public void queryUpcomingEventList(List<Record> recordList) {
+        Map<String, String> hashMap = PreferenceManager.getInstance().loadEventHashMap();
+        recordList.forEach(record -> {
+            Event upcomingEvent = Event.upcomingEvent(record.getCalendarid());
+            Calendar upcomingEventCalendar = Calendar.getInstance();
+            upcomingEventCalendar.set(
+                    upcomingEvent.getYear(), upcomingEvent.getMonth(), upcomingEvent.getDay());
+            if (hashMap.containsKey(record.toString())) {
+                String value = hashMap.get(record.toString());
+                Event eventValue = Event.fromString(Objects.requireNonNull(value));
+                if (!upcomingEvent.equals(eventValue)) {
+                    hashMap.put(record.toString(), upcomingEvent.toString());
+                    CalendarQueryHandler.insertEvent(context,
+                            upcomingEventCalendar.getTimeInMillis(), record.getName());
+                }
+            }
+            else {
+                //put new value to hashmap and insert query
+                hashMap.put(record.toString(), upcomingEvent.toString());
+                CalendarQueryHandler.insertEvent(context,
+                        upcomingEventCalendar.getTimeInMillis(), record.getName());
+            }
+        });
+        PreferenceManager.getInstance().storeEventHashMap(hashMap);
     }
 
     //==================================DELETE=================================================
@@ -170,43 +199,5 @@ public class MainViewModel extends AndroidViewModel {
 
             }
         });
-    }
-
-    public List<Integer> inputValidation (String name, String date, boolean isLeap) {
-        List<Integer> result = new ArrayList<>();
-        if (name.isEmpty()) result.add(Constants.RECORD_INPUT_EMPTY_NAME);
-
-        if (date.length() == 8) {
-            Lunar lunar = new Lunar(Integer.parseInt(date.substring(0, 4)),
-                    Integer.parseInt(date.substring(4, 6)),
-                    Integer.parseInt(date.substring(6)),
-                    isLeap);
-            Lunar lunarRecalculated = LunarSolarConverter.SolarToLunar(LunarSolarConverter.LunarToSolar(lunar));
-
-            if (!lunar.equals(lunarRecalculated)) {
-                result.add(Constants.RECORD_INPUT_INVALID_DATE);
-            }
-        }
-        else {
-            result.add(Constants.RECORD_INPUT_INVALID_DATE);
-        }
-        if (result.isEmpty()) result.add(Constants.RECORD_INPUT_VALID);
-        return result;
-    }
-
-
-
-    public boolean isPermissionGranted(String[] strings) {
-        for (String permissionString:strings) {
-            Log.d("MAGG", "isPermissionGranted: " + permissionString);
-            if (!(ContextCompat.checkSelfPermission(context, permissionString) ==
-                    PackageManager.PERMISSION_GRANTED)) return false;
-        }
-        return true;
-    }
-
-    public boolean isPermissionGranted(Collection<Boolean> results) {
-        int count = (int) results.stream().filter(aBoolean -> aBoolean).count();
-        return count == results.size();
     }
 }

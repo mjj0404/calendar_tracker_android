@@ -62,28 +62,6 @@ public class CalendarQueryHandler extends AsyncQueryHandler {
                 CALENDAR_PROJECTION, null, null, null);
     }
 
-    public static void updateEvent(Context context, long timeLong, String title) {
-        ContentResolver resolver = context.getContentResolver();
-
-        if (CalendarQueryHandler == null)
-            CalendarQueryHandler = new CalendarQueryHandler(resolver);
-
-        ContentValues values = new ContentValues();
-        values.put(Events.DTSTART, timeLong);
-        values.put(Events.DTEND, timeLong);
-        values.put(Events.ALL_DAY, 1);
-        values.put(Events.TITLE, title);
-        values.put(Events.DESCRIPTION, "Group workout");
-
-        PreferenceManager.init(context);
-
-        StringBuilder builder = new StringBuilder();
-        builder.append(values.get(Events.TITLE)).append(values.get(Events.DTSTART));
-
-        CalendarQueryHandler.startQuery(UPDATE, values, Calendars.CONTENT_URI,
-                CALENDAR_PROJECTION, null, null, null);
-    }
-
     // onQueryComplete
     @Override
     public void onQueryComplete(int token, Object object, Cursor cursor)
@@ -106,22 +84,6 @@ public class CalendarQueryHandler extends AsyncQueryHandler {
 
             startInsert(EVENT, null, Events.CONTENT_URI, values);
         }
-        else if (token == UPDATE) {
-
-            ContentValues values = (ContentValues) object;
-//            values.put(Events.CALENDAR_ID, calendarID);
-            values.put(Events.EVENT_TIMEZONE,
-                    TimeZone.getDefault().getDisplayName());
-
-//            StringBuilder builder = new StringBuilder();
-//            builder.append(calendarID).append(values.get(Events.TITLE)).append(values.get(Events.DTSTART));
-
-//            String selection = "(" + Calendars._ID + "= ?)";
-//            String[] selectionArgs = new String[] {String.valueOf(calendarID)};
-
-//            startUpdate(EVENT, null, Events.CONTENT_URI, values, selection, selectionArgs);
-
-        }
     }
 
     // onInsertComplete
@@ -133,21 +95,22 @@ public class CalendarQueryHandler extends AsyncQueryHandler {
             switch (token)
             {
                 case EVENT:
-                    long eventID = Long.parseLong(uri.getLastPathSegment());
-                    // TODO : give users to set reminder
-                    ContentValues values = (ContentValues) object;
-//                    ContentValues values = new ContentValues();
-//                    values.put(Reminders.MINUTES, 10);
-//                    values.put(Reminders.EVENT_ID, eventID);
-//                    values.put(Reminders.METHOD, Reminders.METHOD_ALERT);
-//                    startInsert(REMINDER, null, Reminders.CONTENT_URI, values);
+                    if (PreferenceManager.getInstance().isAddingReminder()) {
+                        int reminderSetting = PreferenceManager.getInstance().getReminderSetting();
+                        long eventID = Long.parseLong(uri.getLastPathSegment());
+                        ContentValues values = (ContentValues) object;
+                        if (reminderSetting == Constants.REMIND_DAY_BEFORE) {
+                            values.put(Reminders.MINUTES, 1440);
+                        }
+                        else if (reminderSetting == Constants.REMIND_HOUR_BEFORE) {
+                            values.put(Reminders.MINUTES, 60);
+                        }
+                        values.put(Reminders.EVENT_ID, eventID);
+                        values.put(Reminders.METHOD, Reminders.METHOD_ALERT);
+                        startInsert(REMINDER, null, Reminders.CONTENT_URI, values);
+                    }
                     break;
             }
         }
-    }
-
-    @Override
-    protected void onUpdateComplete(int token, Object cookie, int result) {
-        super.onUpdateComplete(token, cookie, result);
     }
 }

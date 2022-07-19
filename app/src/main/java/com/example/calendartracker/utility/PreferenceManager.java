@@ -36,8 +36,8 @@ public class PreferenceManager {
         return instance;
     }
 
-    public Map<String, Long> loadEventHashMap() {
-        Map<String, Long> outputMap = new HashMap<>();
+    public Map<String, String> loadEventHashMap() {
+        Map<String, String> outputMap = new HashMap<>();
         try {
             if (pref != null) {
                 String jsonString = pref.getString(Constants.ID_MAP_RECORD_EVENT, (new JSONObject()).toString());
@@ -46,7 +46,7 @@ public class PreferenceManager {
                 Iterator<String> keysItr = jsonObject.keys();
                 while (keysItr.hasNext()) {
                     String key = keysItr.next();
-                    long value = jsonObject.getLong(key);
+                    String value = jsonObject.getString(key);
                     outputMap.put(key, value);
                 }
             }
@@ -56,7 +56,7 @@ public class PreferenceManager {
         return outputMap;
     }
 
-    public void storeEventHashMap(Map<String, Long> inputMap) {
+    public void storeEventHashMap(Map<String, String> inputMap) {
         if (pref != null) {
             JSONObject jsonObject = new JSONObject(inputMap);
             String jsonString = jsonObject.toString();

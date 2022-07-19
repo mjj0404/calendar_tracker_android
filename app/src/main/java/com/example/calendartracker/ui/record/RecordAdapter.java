@@ -92,6 +92,11 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         notifyDataSetChanged();
     }
 
+    public void removeAt(int index) {
+        recordList.remove(index);
+        notifyDataSetChanged();
+    }
+
     public static class RecordViewHolder extends RecyclerView.ViewHolder {
 
         private TextView nameTextView;

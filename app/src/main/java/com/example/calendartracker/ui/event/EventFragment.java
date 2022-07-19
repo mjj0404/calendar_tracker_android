@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -24,17 +23,17 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calendartracker.R;
 import com.example.calendartracker.databinding.FragmentEventBinding;
+import com.example.calendartracker.model.Event;
 import com.example.calendartracker.model.Lunar;
 import com.example.calendartracker.model.Record;
 import com.example.calendartracker.model.Solar;
 import com.example.calendartracker.utility.AlertDialogWithListener;
+import com.example.calendartracker.utility.CalendarQueryHandler;
 import com.example.calendartracker.utility.Constants;
 import com.example.calendartracker.utility.LunarSolarConverter;
 import com.example.calendartracker.utility.PreferenceManager;
@@ -42,6 +41,7 @@ import com.example.calendartracker.viewmodel.MainViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -60,7 +60,7 @@ public class EventFragment extends Fragment {
             new ActivityResultCallback<Map<String, Boolean>>() {
                 @Override
                 public void onActivityResult(Map<String, Boolean> result) {
-                    if (viewModel.isPermissionGranted(result.values())) {
+                    if (isPermissionGranted(result.values())) {
                         AlertDialogWithListener dialog = new AlertDialogWithListener(
                                 requireActivity(),
                                 Constants.DIALOG_CREATE_EVENT,
@@ -68,7 +68,7 @@ public class EventFragment extends Fragment {
                                     @Override
                                     public void onConfirmClick() {
                                         Log.d(TAG, "onConfirmClick: ");
-                                        parseEventToGoogleCalendar();
+                                        viewModel.queryUpcomingEventList(upcomingEventList);
                                     }
 
                                     @Override
@@ -98,7 +98,7 @@ public class EventFragment extends Fragment {
                         );
                         dialog.onCreateDialog(null).show();
                     }
-                    else if (!viewModel.isPermissionGranted(result.values())) {
+                    else if (!isPermissionGranted(result.values())) {
                         Log.d("MAGG", "onActivityResult: else");
                         AlertDialogWithListener dialog = new AlertDialogWithListener(
                                 requireActivity(),
@@ -166,64 +166,12 @@ public class EventFragment extends Fragment {
                 return false;
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
-
-//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                Log.d(TAG, "handleOnBackPressed: ");
-//                requireActivity().finish();
-//                System.exit(0);
-//            }
-//        };
-//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    private void parseEventToGoogleCalendar() {
-
-//            addEvent("Hehe","",1657238400000l ,1657324800000l);
-
-//            CalendarQueryHandler.insertEvent(getActivity(), startTime.getTimeInMillis(),
-//                    endTime.getTimeInMillis(), "title");
-
-
-        Calendar timeLong = Calendar.getInstance();
-        timeLong.set(2022,6,0);
-        // month start from 0
-        // day start from 1
-        Log.d(TAG, "onClick: " + timeLong.getTimeInMillis());
-        Log.d(TAG, "onClick: " + timeLong.getTime());
-        Log.d(TAG, "onClick: " + timeLong.getTimeZone());
-
-        Log.d(TAG, "onClick: " + upcomingEventList.toString());
-
-        upcomingEventList.forEach(record -> {
-            long calendarid = record.getCalendarid().longValue();
-            Solar solar = LunarSolarConverter.SolarFromInt(calendarid);
-            Lunar lunar = LunarSolarConverter.SolarToLunar(solar);
-
-            Log.d(TAG, "onClick: " + Calendar.getInstance().get(Calendar.YEAR) + " " +
-                    Calendar.getInstance().get(Calendar.MONTH) + " " +
-                    Calendar.getInstance().get(Calendar.DATE));
-
-
-
-            Calendar timeLongTemp = Calendar.getInstance();
-            timeLongTemp.set(solar.solarYear, solar.solarMonth-1, solar.solarDay);
-
-//                CalendarQueryHandler.insertEvent(getActivity().getApplicationContext(),
-//                        timeLongTemp.getTimeInMillis(), record.getName());
-        });
-
-
-
-//            CalendarQueryHandler.insertEvent(getActivity().getApplicationContext(),
-//                    timeLong.getTimeInMillis(), "some event");
     }
 
     private void addEvent(String title, String location, long begin, long end) {
@@ -236,5 +184,10 @@ public class EventFragment extends Fragment {
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(intent);
         }
+    }
+
+    private boolean isPermissionGranted(Collection<Boolean> results) {
+        int count = (int) results.stream().filter(aBoolean -> aBoolean).count();
+        return count == results.size();
     }
 }

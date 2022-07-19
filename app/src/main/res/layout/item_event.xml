@@ -44,6 +44,12 @@
                 android:text="@string/event_recurring_n_times" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="D" />
+
+            <TextView
                 android:id="@+id/event_d_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

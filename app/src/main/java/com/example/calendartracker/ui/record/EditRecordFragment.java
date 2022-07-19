@@ -34,6 +34,7 @@ import com.example.calendartracker.model.Record;
 import com.example.calendartracker.model.Solar;
 import com.example.calendartracker.utility.Constants;
 import com.example.calendartracker.utility.AlertDialogWithListener;
+import com.example.calendartracker.utility.EventConverter;
 import com.example.calendartracker.utility.LunarSolarConverter;
 import com.example.calendartracker.viewmodel.MainViewModel;
 
@@ -173,14 +174,17 @@ public class EditRecordFragment extends Fragment implements TextWatcher{
     }
 
     private boolean isRecordInputValid() {
-        List<Integer> result = inputValidation(
-                binding.editRecordNameEditText.getText().toString(),
-                binding.editRecordLunarDateEditText.getUnMaskedText(),
-                binding.editRecordLeapMonthSwitch.isChecked()
-        );
+        String nameString = binding.editRecordNameEditText.getText().toString();
+        String dateString = binding.editRecordLunarDateEditText.getUnMaskedText();
+        boolean isLeap = binding.editRecordLeapMonthSwitch.isChecked();
+
+        List<Integer> result = inputValidation(nameString, dateString,isLeap);
         if (result.contains(Constants.RECORD_INPUT_VALID)) {
             binding.editRecordInvalidDateWarningTextview.setVisibility(View.INVISIBLE);
             binding.editRecordNameWarningTextview.setVisibility(View.INVISIBLE);
+            binding.editRecordCorrespondingGregorianTextview.setText(
+                    getCorrespondingGregorianString(dateString, isLeap));
+            binding.editRecordGregorianTextview.setVisibility(View.VISIBLE);
             return true;
         }
         if (result.contains(Constants.RECORD_INPUT_EMPTY_NAME))
@@ -189,6 +193,8 @@ public class EditRecordFragment extends Fragment implements TextWatcher{
             binding.editRecordInvalidDateWarningTextview.setVisibility(View.VISIBLE);
             binding.editRecordInvalidDateWarningTextview.setText(R.string.edit_record_invalid_date);
         }
+        binding.editRecordCorrespondingGregorianTextview.setText("");
+        binding.editRecordGregorianTextview.setVisibility(View.INVISIBLE);
         return false;
     }
 
@@ -222,5 +228,15 @@ public class EditRecordFragment extends Fragment implements TextWatcher{
         }
         if (result.isEmpty()) result.add(Constants.RECORD_INPUT_VALID);
         return result;
+    }
+
+    private String getCorrespondingGregorianString(String date, boolean isLeap) {
+        Lunar lunar = new Lunar(Integer.parseInt(date.substring(0, 4)),
+                Integer.parseInt(date.substring(4, 6)),
+                Integer.parseInt(date.substring(6)),
+                isLeap);
+        LunarSolarConverter.lunarToSolar(lunar);
+        return EventConverter.fromSolar(LunarSolarConverter.lunarToSolar(lunar))
+                .toString().replace(',','/');
     }
 }

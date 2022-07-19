@@ -1,6 +1,5 @@
 package com.example.calendartracker.ui.record;
 
-import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +12,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calendartracker.R;
+import com.example.calendartracker.model.Event;
+import com.example.calendartracker.model.Lunar;
 import com.example.calendartracker.model.Record;
+import com.example.calendartracker.utility.EventConverter;
+import com.example.calendartracker.utility.LunarSolarConverter;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordViewHolder> implements Filterable {
 
@@ -100,23 +105,34 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
     public static class RecordViewHolder extends RecyclerView.ViewHolder {
 
         private TextView nameTextView;
-        private TextView dDayTextView;
         private TextView gregorianTextView;
         private TextView easternLunarTextView;
 
         public RecordViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.record_name);
-            dDayTextView = itemView.findViewById(R.id.record_d_day);
             gregorianTextView = itemView.findViewById(R.id.record_gr_date);
             easternLunarTextView = itemView.findViewById(R.id.record_el_date);
         }
 
         public void bind(final Record record, final OnItemClickListener listener) {
+            Event origin = EventConverter.fromCalendarId(record.getCalendarid());
+            Lunar lunar = LunarSolarConverter.solarToLunar(
+                    LunarSolarConverter.solarFromInt(record.getCalendarid()));
+
+            String isLeapString = "";
+            if (lunar.isleap) {
+                isLeapString = itemView.getResources().getString(
+                        R.string.edit_record_is_leap_month);
+            }
+            String lunarString = String.valueOf(lunar.lunarYear) + "/" +
+                    String.valueOf(lunar.lunarMonth) + "/" +
+                    String.valueOf(lunar.lunarDay) + " " + isLeapString;
+
+
             nameTextView.setText(record.getName());
-            dDayTextView.setText(record.getName());
-            gregorianTextView.setText(record.getName());
-            easternLunarTextView.setText(record.getName());
+            gregorianTextView.setText(origin.toString().replace(',','/'));
+            easternLunarTextView.setText(lunarString);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

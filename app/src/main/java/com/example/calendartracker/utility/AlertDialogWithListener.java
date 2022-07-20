@@ -3,7 +3,6 @@ package com.example.calendartracker.utility;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -19,7 +18,8 @@ public class AlertDialogWithListener extends DialogFragment {
     private final Context context;
     private final DialogOnClickListener listener;
     private final int operation;
-    private boolean showOnlyPositive = false;
+    private boolean showPositive = true;
+    private boolean showNegative = true;
 
     private String name;
 
@@ -57,7 +57,7 @@ public class AlertDialogWithListener extends DialogFragment {
                 break;
             case Constants.DIALOG_PERMISSION_SHORT:
                 message = context.getString(R.string.parse_require_permission_short);
-                showOnlyPositive = true;
+                showNegative = false;
                 break;
             case Constants.DIALOG_CREATE_EVENT:
                 message = context.getString(R.string.parse_create_event_confirmation);
@@ -65,14 +65,25 @@ public class AlertDialogWithListener extends DialogFragment {
             case Constants.DIALOG_DELETE_CONFIRMATION:
                 message = context.getString(R.string.etc_ask_delete_confirmation, name);
                 break;
-        }
-        builder.setMessage(message).setPositiveButton(R.string.etc_ok, new DialogInterface.OnClickListener() {
+            case Constants.DIALOG_PARSE_SINGLE_RECORD:
+                message = context.getString(R.string.parse_single_item_confirmation);
+                builder.setMessage(message).setPositiveButton(R.string.etc_do_nat_ask, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // START THE GAME!
                         listener.onConfirmClick();
                     }
                 });
-        if (!showOnlyPositive) {
+                showPositive = false;
+                break;
+        }
+
+        if (showPositive) {
+            builder.setMessage(message).setPositiveButton(R.string.etc_ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    listener.onConfirmClick();
+                }
+            });
+        }
+        if (showNegative) {
             builder.setMessage(message).setNegativeButton(R.string.etc_cancel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     listener.onCancelClick();

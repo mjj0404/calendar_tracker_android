@@ -19,6 +19,7 @@ import com.example.calendartracker.model.User;
 import com.example.calendartracker.repo.RecordRepository;
 import com.example.calendartracker.utility.CalendarQueryHandler;
 import com.example.calendartracker.utility.Constants;
+import com.example.calendartracker.utility.EventConverter;
 import com.example.calendartracker.utility.LunarSolarConverter;
 import com.example.calendartracker.utility.PreferenceManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -98,13 +99,12 @@ public class MainViewModel extends AndroidViewModel {
     public void queryUpcomingEventList(List<Record> recordList) {
         Map<String, String> hashMap = PreferenceManager.getInstance().loadEventHashMap();
         recordList.forEach(record -> {
-            Event upcomingEvent = Event.upcomingEvent(record.getCalendarid());
-            Calendar upcomingEventCalendar = Calendar.getInstance();
-            upcomingEventCalendar.set(
-                    upcomingEvent.getYear(), upcomingEvent.getMonth(), upcomingEvent.getDay());
+            Event upcomingEvent = EventConverter.upcomingEvent(record.getCalendarid());
+            Calendar upcomingEventCalendar = EventConverter.toCalendar(upcomingEvent);
+
             if (hashMap.containsKey(record.toString())) {
                 String value = hashMap.get(record.toString());
-                Event eventValue = Event.fromString(Objects.requireNonNull(value));
+                Event eventValue = EventConverter.fromString(Objects.requireNonNull(value));
                 if (!upcomingEvent.equals(eventValue)) {
                     hashMap.put(record.toString(), upcomingEvent.toString());
                     CalendarQueryHandler.insertEvent(context,

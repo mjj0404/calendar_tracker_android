@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,9 +40,14 @@ import com.example.calendartracker.utility.LunarSolarConverter;
 import com.example.calendartracker.utility.PreferenceManager;
 import com.example.calendartracker.viewmodel.MainViewModel;
 
+import org.checkerframework.checker.units.qual.C;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -166,6 +172,49 @@ public class EventFragment extends Fragment {
                 return false;
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                Log.d(TAG, "onMove: " + target.getAdapterPosition());
+                Log.d(TAG, "onMove: " + target.getOldPosition());
+                Log.d(TAG, "onMove: " + viewHolder.getAdapterPosition());
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                if (viewHolder.getAdapterPosition() != RecyclerView.NO_POSITION) {
+                    Record record = upcomingEventList.get(position);
+                    Map<String, String> hashMap = PreferenceManager.getInstance().loadEventHashMap();
+                    if (!PreferenceManager.getInstance().isSingleItemParsingAllowed()) {
+                        AlertDialogWithListener dialog = new AlertDialogWithListener(
+                                requireActivity(),
+                                Constants.DIALOG_PARSE_SINGLE_RECORD,
+                                new AlertDialogWithListener.DialogOnClickListener() {
+                                    @Override
+                                    public void onConfirmClick() {
+                                        PreferenceManager.getInstance().setSingleItemParsingAllowed(true);
+                                        addEvent(record);
+                                    }
+
+                                    @Override
+                                    public void onCancelClick() { }
+                                }
+                        );
+                        dialog.onCreateDialog(null).show();
+                    }
+                    else {
+                        addEvent(record);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+        };
+
+        ItemTouchHelper touchHelper = new ItemTouchHelper(simpleCallback);
+        touchHelper.attachToRecyclerView(recyclerView);
     }
 
     @Override
@@ -174,13 +223,17 @@ public class EventFragment extends Fragment {
         binding = null;
     }
 
-    private void addEvent(String title, String location, long begin, long end) {
+    private void addEvent(Record record) {
+        Solar solar = LunarSolarConverter.solarFromInt(record.getCalendarid());
+        LocalDate date = LocalDate.of(solar.solarYear, solar.solarMonth, solar.solarDay);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
         Intent intent = new Intent(Intent.ACTION_INSERT)
                 .setData(CalendarContract.Events.CONTENT_URI)
-                .putExtra(CalendarContract.Events.TITLE, title)
-                .putExtra(CalendarContract.Events.EVENT_LOCATION, location)
-                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, begin)
-                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, end);
+                .putExtra(CalendarContract.Events.TITLE, record.getName())
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, calendar.getTimeInMillis())
+                .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(intent);
         }

@@ -10,8 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calendartracker.R;
+import com.example.calendartracker.model.Event;
+import com.example.calendartracker.model.Lunar;
 import com.example.calendartracker.model.Record;
+import com.example.calendartracker.model.Solar;
+import com.example.calendartracker.utility.EventConverter;
+import com.example.calendartracker.utility.LunarSolarConverter;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,16 +39,31 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
         Record record = recordList.get(position);
 
+        Event upcomingEvent = EventConverter.upcomingEvent(record.getCalendarid());
+        Event originalEvent = EventConverter.originalEvent(record.getCalendarid());
+
+        LocalDate recordInstant = EventConverter.toInstant(originalEvent);
+        LocalDate eventInstant = EventConverter.toInstant(upcomingEvent);
+        LocalDate todayInstant = LocalDate.now(ZoneId.of(ZoneId.systemDefault().toString()));
+
+        int recurrence = (int) ChronoUnit.YEARS.between(recordInstant, eventInstant);
+        int dDay = (int) ChronoUnit.DAYS.between(eventInstant, todayInstant);
+
         holder.nameTextView.setText(record.getName());
-        holder.eventNumberTextView.setText(record.getName());
-        holder.dDayTextView.setText(record.getName());
-        holder.gregorianTextView.setText(record.getName());
-        holder.easternLunarTextView.setText(record.getName());
+        holder.eventNumberTextView.setText(String.valueOf(recurrence));
+        holder.dDayTextView.setText(String.valueOf(dDay));
+        holder.gregorianTextView.setText(upcomingEvent.toString().replace(',','/'));
+        holder.easternLunarTextView.setText(LunarSolarConverter.lunarToString(
+                EventConverter.toLunar(upcomingEvent)));
     }
 
     @Override
     public int getItemCount() {
         return recordList.size();
+    }
+
+    public Record getItem(int pos) {
+        return recordList.get(pos);
     }
 
     @SuppressLint("NotifyDataSetChanged")

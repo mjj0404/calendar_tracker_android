@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,9 +35,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.calendartracker.R;
 import com.example.calendartracker.databinding.FragmentRecordBinding;
 import com.example.calendartracker.model.Record;
+import com.example.calendartracker.utility.AlertDialogWithListener;
 import com.example.calendartracker.utility.Constants;
 import com.example.calendartracker.viewmodel.MainViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,6 +47,7 @@ public class RecordFragment extends Fragment {
 
     private FragmentRecordBinding binding;
     private MainViewModel viewModel;
+    private List<Record> recordList = new ArrayList<>();
     private RecordAdapter adapter;
 
     private static final String TAG = "RecordFragment";
@@ -73,6 +77,7 @@ public class RecordFragment extends Fragment {
             @Override
             public void onChanged(List<Record> records) {
                 adapter.setRecordList(records);
+                recordList = records;
             }
         });
 
@@ -105,6 +110,42 @@ public class RecordFragment extends Fragment {
                 return false;
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    Record record = recordList.get(position);
+                    AlertDialogWithListener dialog = new AlertDialogWithListener(
+                            requireActivity(),
+                            record.getName(),
+                            Constants.DIALOG_DELETE_CONFIRMATION,
+                            new AlertDialogWithListener.DialogOnClickListener() {
+                                @Override
+                                public void onConfirmClick() {
+                                    viewModel.deleteRecord(record.getRecordid());
+                                    adapter.removeAt(position);
+                                    Toast.makeText(requireActivity().getApplicationContext(),
+                                            getString(R.string.edit_record_user_deleted, record.getName()),
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onCancelClick() { }
+                            });
+                    dialog.onCreateDialog(null).show();
+                }
+                adapter.notifyDataSetChanged();
+            }
+        };
+        ItemTouchHelper touchHelper = new ItemTouchHelper(simpleCallback);
+        touchHelper.attachToRecyclerView(recyclerView);
 
         return root;
     }

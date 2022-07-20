@@ -67,6 +67,14 @@ public class PreferenceManager {
         }
     }
 
+    public void setSingleItemParsingAllowed (boolean param) {
+        pref.edit().putBoolean(Constants.DIALOG_DO_NOT_ASK, param).apply();
+    }
+
+    public boolean isSingleItemParsingAllowed() {
+        return pref.getBoolean(Constants.DIALOG_DO_NOT_ASK, false);
+    }
+
     public void setThemeChanged (boolean param) {
         pref.edit().putBoolean(Constants.THEME_CONFIGURATION_CHANGED, param).apply();
     }

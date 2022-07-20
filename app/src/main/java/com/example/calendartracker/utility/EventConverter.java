@@ -6,9 +6,18 @@ import com.example.calendartracker.model.Event;
 import com.example.calendartracker.model.Lunar;
 import com.example.calendartracker.model.Solar;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 
 public class EventConverter {
+    public static Event originalEvent(int calendarid) {
+        Solar solar = LunarSolarConverter.solarFromInt(calendarid);
+        LocalDate localDate = LocalDate.of(solar.solarYear, solar.solarMonth, solar.solarDay);
+        return new Event(solar.solarYear, solar.solarMonth, solar.solarDay);
+    }
+
     public static Event upcomingEvent(int calendarid) {
         Calendar currentTime = Calendar.getInstance();
 
@@ -19,15 +28,31 @@ public class EventConverter {
 
         Calendar recordTime = Calendar.getInstance();
         recordTime.set(solar.solarYear, solar.solarMonth - 1, solar.solarDay);
-        Log.d("EventFragment", "upcomingEvent: recordTime :" + recordTime.get(Calendar.YEAR)
-                + "," + recordTime.get(Calendar.MONTH)+1 + "," +  recordTime.get(Calendar.DATE));
+
         if (recordTime.before(currentTime)) {
             lunar.lunarYear = currentTime.get(Calendar.YEAR) + 1;
             solar = LunarSolarConverter.lunarToSolar(lunar);
-            Log.d("EventFragment", "upcomingEvent: inside if : " + solar.solarYear+ "," +
-                    solar.solarMonth+ "," + solar.solarDay);
+
         }
         return fromSolar(solar);
+    }
+
+    public static LocalDate toInstant(Event event) {
+        return LocalDate.of(event.getYear(), event.getMonth(), event.getDay());
+    }
+
+    public static LocalDate toInstant(Solar solar) {
+        return LocalDate.of(solar.solarYear, solar.solarMonth, solar.solarDay);
+    }
+
+    public static LocalDate toInstant(Lunar lunar) {
+        Solar solar = LunarSolarConverter.lunarToSolar(lunar);
+        return LocalDate.of(solar.solarYear, solar.solarMonth, solar.solarDay);
+    }
+
+    public static Lunar toLunar(Event event) {
+        long calendarid = LunarSolarConverter.solarToInt(event.getYear(), event.getMonth(), event.getDay());
+        return LunarSolarConverter.solarToLunar(LunarSolarConverter.solarFromInt(calendarid));
     }
 
     public static Calendar toCalendar(Event event) {

@@ -149,7 +149,7 @@ public class EditRecordFragment extends Fragment implements TextWatcher{
                     Lunar lunar = LunarSolarConverter.solarToLunar(solar);
 
                     binding.editRecordNameEditText.setText(record.getName());
-                    binding.editRecordLunarDateEditText.setText(lunar.toString());
+                    binding.editRecordLunarDateEditText.setText(LunarSolarConverter.lunarDateToString(lunar));
                     binding.editRecordLeapMonthSwitch.setChecked(lunar.isleap);
                 }
             });
@@ -178,7 +178,7 @@ public class EditRecordFragment extends Fragment implements TextWatcher{
         String dateString = binding.editRecordLunarDateEditText.getUnMaskedText();
         boolean isLeap = binding.editRecordLeapMonthSwitch.isChecked();
 
-        List<Integer> result = inputValidation(nameString, dateString,isLeap);
+        List<Integer> result = inputValidation(nameString, dateString, isLeap);
         if (result.contains(Constants.RECORD_INPUT_VALID)) {
             binding.editRecordInvalidDateWarningTextview.setVisibility(View.INVISIBLE);
             binding.editRecordNameWarningTextview.setVisibility(View.INVISIBLE);
@@ -213,10 +213,7 @@ public class EditRecordFragment extends Fragment implements TextWatcher{
         if (name.isEmpty()) result.add(Constants.RECORD_INPUT_EMPTY_NAME);
 
         if (date.length() == 8) {
-            Lunar lunar = new Lunar(Integer.parseInt(date.substring(0, 4)),
-                    Integer.parseInt(date.substring(4, 6)),
-                    Integer.parseInt(date.substring(6)),
-                    isLeap);
+            Lunar lunar = Lunar.fromInput(date, isLeap);
             Lunar lunarRecalculated = LunarSolarConverter.solarToLunar(LunarSolarConverter.lunarToSolar(lunar));
 
             if (!lunar.equals(lunarRecalculated)) {

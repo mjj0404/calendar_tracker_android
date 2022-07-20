@@ -2,6 +2,8 @@ package com.example.calendartracker.utility;
 
 import android.util.Log;
 
+import com.example.calendartracker.CalendarTrackerApplication;
+import com.example.calendartracker.R;
 import com.example.calendartracker.model.Event;
 import com.example.calendartracker.model.Lunar;
 import com.example.calendartracker.model.Solar;
@@ -195,5 +197,23 @@ public class LunarSolarConverter {
             return lunarToInt(lunar);
         }
         else return -1L;
+    }
+
+    public static String lunarDateToString(Lunar lunar) {
+        return String.valueOf(lunar.lunarYear) +
+                String.format("%02d", lunar.lunarMonth) +
+                String.format("%02d", lunar.lunarDay);
+    }
+
+    public static String lunarToString(Lunar lunar) {
+        String isLeapString = "";
+        if (lunar.isleap) {
+            isLeapString = CalendarTrackerApplication.getContext().
+                    getResources().getString(R.string.edit_record_is_leap_month);
+        }
+        return String.valueOf(lunar.lunarYear) + "/" +
+                String.valueOf(lunar.lunarMonth) + "/" +
+                String.valueOf(lunar.lunarDay) + " " +
+                isLeapString;
     }
 }

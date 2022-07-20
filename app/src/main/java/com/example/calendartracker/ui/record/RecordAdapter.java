@@ -120,19 +120,9 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
             Lunar lunar = LunarSolarConverter.solarToLunar(
                     LunarSolarConverter.solarFromInt(record.getCalendarid()));
 
-            String isLeapString = "";
-            if (lunar.isleap) {
-                isLeapString = itemView.getResources().getString(
-                        R.string.edit_record_is_leap_month);
-            }
-            String lunarString = String.valueOf(lunar.lunarYear) + "/" +
-                    String.valueOf(lunar.lunarMonth) + "/" +
-                    String.valueOf(lunar.lunarDay) + " " + isLeapString;
-
-
             nameTextView.setText(record.getName());
             gregorianTextView.setText(origin.toString().replace(',','/'));
-            easternLunarTextView.setText(lunarString);
+            easternLunarTextView.setText(LunarSolarConverter.lunarToString(lunar));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -3,6 +3,7 @@
     <string name="title_upcoming_event">Upcoming Events</string>
     <string name="title_records">Records</string>
     <string name="title_setting">Setting</string>
+    <string name="title_help">Help</string>
 
     <!--EVENT-->
     <string name="event_recurring_n_times">\u0020times recurring event,\u0020</string>
@@ -34,6 +35,9 @@
     <string name="parse_request_permission">Grant Permission</string>
     <string name="parse_create_event_confirmation">The whole list of \'Upcoming Events\' will be
         parsed into your Google Calendar. Proceed?</string>
+    <string name="parse_single_item_confirmation">You\'re about to be directed to Google Calendar.
+        Manually adding events to Google Calendar may cause duplicate events. Proceed? </string>
+
 
     <!--SETTING-->
     <string name="setting_theme"><b>Theme</b></string>
@@ -51,6 +55,7 @@
     <string name="etc_yes">Yes</string>
     <string name="etc_no">No</string>
     <string name="etc_ok">OK</string>
+    <string name="etc_do_nat_ask">Proceed and Do Not Ask Again</string>
     <string name="etc_cancel">Cancel</string>
     <string name="etc_warning">Warning</string>
     <string name="etc_ask_delete_confirmation">Are you sure you wish to delete %1$s?</string>

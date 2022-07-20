@@ -20,6 +20,9 @@ public class Constants {
     public static final int DIALOG_PERMISSION_LONG = 10;
     public static final int DIALOG_CREATE_EVENT = 11;
     public static final int DIALOG_DELETE_CONFIRMATION = 12;
+    public static final int DIALOG_PARSE_SINGLE_RECORD = 13;
+
+    public static final String DIALOG_DO_NOT_ASK = "DIALOG_DO_NOT_ASK";
 
     // ================================SETTING===============================================
 

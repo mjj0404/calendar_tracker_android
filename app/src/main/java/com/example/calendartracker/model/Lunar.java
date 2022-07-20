@@ -39,4 +39,17 @@ public class Lunar {
                 String.format("%02d", this.lunarMonth) +
                 String.format("%02d", this.lunarDay);
     }
+
+    public static Lunar fromInput(String date, boolean isLeap) {
+        if (date.length() == 8) {
+            Lunar lunar = new Lunar(Integer.parseInt(date.substring(0, 4)),
+                    Integer.parseInt(date.substring(4, 6)),
+                    Integer.parseInt(date.substring(6)),
+                    isLeap);
+            return lunar;
+        }
+        else {
+            return new Lunar();
+        }
+    }
 }

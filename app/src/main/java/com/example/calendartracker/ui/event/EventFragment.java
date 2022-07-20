@@ -73,13 +73,11 @@ public class EventFragment extends Fragment {
                                 new AlertDialogWithListener.DialogOnClickListener() {
                                     @Override
                                     public void onConfirmClick() {
-                                        Log.d(TAG, "onConfirmClick: ");
                                         viewModel.queryUpcomingEventList(upcomingEventList);
                                     }
 
                                     @Override
                                     public void onCancelClick() {
-                                        Log.d(TAG, "onCancelClick: ");
                                     }
                                 }
                         );
@@ -92,20 +90,15 @@ public class EventFragment extends Fragment {
                                 Constants.DIALOG_PERMISSION_SHORT,
                                 new AlertDialogWithListener.DialogOnClickListener() {
                                     @Override
-                                    public void onConfirmClick() {
-                                        Log.d(TAG, "onConfirmClick: onConfirm");
-                                    }
+                                    public void onConfirmClick() { }
 
                                     @Override
-                                    public void onCancelClick() {
-                                        Log.d(TAG, "onCancelClick: onCancel");
-                                    }
+                                    public void onCancelClick() { }
                                 }
                         );
                         dialog.onCreateDialog(null).show();
                     }
                     else if (!isPermissionGranted(result.values())) {
-                        Log.d("MAGG", "onActivityResult: else");
                         AlertDialogWithListener dialog = new AlertDialogWithListener(
                                 requireActivity(),
                                 Constants.DIALOG_PERMISSION_LONG,
@@ -131,7 +124,6 @@ public class EventFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        Log.d("MAGG", "onCreateView: Dashboard Frag");
         binding = FragmentEventBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -176,9 +168,6 @@ public class EventFragment extends Fragment {
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                Log.d(TAG, "onMove: " + target.getAdapterPosition());
-                Log.d(TAG, "onMove: " + target.getOldPosition());
-                Log.d(TAG, "onMove: " + viewHolder.getAdapterPosition());
                 return false;
             }
 
@@ -187,7 +176,6 @@ public class EventFragment extends Fragment {
                 int position = viewHolder.getAdapterPosition();
                 if (viewHolder.getAdapterPosition() != RecyclerView.NO_POSITION) {
                     Record record = upcomingEventList.get(position);
-                    Map<String, String> hashMap = PreferenceManager.getInstance().loadEventHashMap();
                     if (!PreferenceManager.getInstance().isSingleItemParsingAllowed()) {
                         AlertDialogWithListener dialog = new AlertDialogWithListener(
                                 requireActivity(),

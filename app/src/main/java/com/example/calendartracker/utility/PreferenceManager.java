@@ -66,6 +66,14 @@ public class PreferenceManager {
             editor.apply();
         }
     }
+    public void setFirstTime (boolean param) {
+        pref.edit().putBoolean(Constants.DIALOG_DO_NOT_ASK, param).apply();
+    }
+
+    public boolean isFirstTime() {
+        return pref.getBoolean(Constants.DIALOG_DO_NOT_ASK, false);
+    }
+
 
     public void setSingleItemParsingAllowed (boolean param) {
         pref.edit().putBoolean(Constants.DIALOG_DO_NOT_ASK, param).apply();

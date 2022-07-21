@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: ");
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        PreferenceManager.init(getApplicationContext());
 
         MainViewModel viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         viewModel.init();

@@ -60,6 +60,15 @@
     <string name="etc_warning">Warning</string>
     <string name="etc_ask_delete_confirmation">Are you sure you wish to delete %1$s?</string>
 
+    <!--ONBOARDING-->
+    <string name="onboarding_event_demo">Upcoming events can be directly sent to Google
+        Calendar for the specific event. You can also parse the whole at once with \'Upload\' button
+        at the top right corner.</string>
+    <string name="onboarding_record_demo">Records can be deleted by swiping left.</string>
+    <string name="onboarding_setting_demo">Settings for dark mode, reminders are available.</string>
+    <string name="onboarding_sign_in">Enjoy using Calendar Tracker! Now Sign in with Google Account
+        to start</string>
+
 
     <string name="server_client_id">963527123473-f4nfg4h0j1ta0m30i9m5h2ps4vl29pvi.apps.googleusercontent.com</string>
     <!-- TODO: Remove or change this placeholder text -->

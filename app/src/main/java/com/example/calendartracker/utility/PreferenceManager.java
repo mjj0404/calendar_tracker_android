@@ -67,11 +67,11 @@ public class PreferenceManager {
         }
     }
     public void setFirstTime (boolean param) {
-        pref.edit().putBoolean(Constants.DIALOG_DO_NOT_ASK, param).apply();
+        pref.edit().putBoolean(Constants.FIRST_TIME, param).apply();
     }
 
     public boolean isFirstTime() {
-        return pref.getBoolean(Constants.DIALOG_DO_NOT_ASK, false);
+        return pref.getBoolean(Constants.FIRST_TIME, true);
     }
 
 

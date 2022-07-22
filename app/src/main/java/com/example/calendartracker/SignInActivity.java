@@ -6,19 +6,19 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.example.calendartracker.ui.onboarding.OnboardingActivity;
 import com.example.calendartracker.utility.Constants;
 import com.example.calendartracker.utility.PreferenceManager;
+import com.example.calendartracker.viewmodel.MainViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,6 +30,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private GoogleSignInClient mGoogleSignInClient;
     private static final String TAG = "MainActivity SignInActivity";
+    private MainViewModel viewModel;
 
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
         new ActivityResultContracts.StartActivityForResult(),
@@ -47,13 +48,10 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         Objects.requireNonNull(getSupportActionBar()).hide();
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        viewModel.init();
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.server_client_id))
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(this, viewModel.getGoogleSignInOptions());
 
         mGoogleSignInClient.silentSignIn()
                 .addOnCompleteListener(
@@ -101,6 +99,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void updateUI(GoogleSignInAccount account) {
         PreferenceManager.getInstance().setFirstTime(false);
+        viewModel.createUser();
         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
         startActivity(intent);
     }

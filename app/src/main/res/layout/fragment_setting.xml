@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -94,5 +95,42 @@
                 android:text="@string/setting_before_hour" />
         </RadioGroup>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/setting_account_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/setting_account" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="15dp"
+        android:layout_margin="2dp">
+        <TextView
+            android:id="@+id/setting_account_sign_out_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:padding="10dp"
+            android:text="@string/setting_account_sign_out" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="15dp"
+        android:layout_margin="2dp">
+        <TextView
+            android:id="@+id/setting_account_delete_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:padding="10dp"
+            android:text="@string/setting_account_delete" />
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

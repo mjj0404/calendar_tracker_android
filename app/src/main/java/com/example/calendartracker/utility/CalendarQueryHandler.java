@@ -79,9 +79,6 @@ public class CalendarQueryHandler extends AsyncQueryHandler {
             values.put(Events.EVENT_TIMEZONE,
                     TimeZone.getDefault().getDisplayName());
 
-            Log.d("MAGG", "onQueryComplete: calendarId: " + calendarID
-                    + "\nvalues.get from insert: " + values.get(Events.DTSTART));
-
             startInsert(EVENT, null, Events.CONTENT_URI, values);
         }
     }

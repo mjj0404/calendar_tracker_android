@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.calendartracker.R;
 import com.example.calendartracker.api.ApiClient;
 import com.example.calendartracker.model.Event;
 import com.example.calendartracker.model.Lunar;
@@ -24,6 +25,8 @@ import com.example.calendartracker.utility.LunarSolarConverter;
 import com.example.calendartracker.utility.PreferenceManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,33 +49,25 @@ public class MainViewModel extends AndroidViewModel {
 
     public MainViewModel(@NonNull Application application) {
         super(application);
-        Log.d("TAGGG", "MainViewModel: ");
     }
 
     public void init() {
-        Log.d("TAGGG", "init: ");
         repository = new RecordRepository();
         getUpcomingEventListLiveDataWithToken();
         getRecordListWithToken();
-
-//        upcomingEventListLiveData = repository.getUpcomingEventListLiveData();
-//        recordListLiveData = repository.getRecordListLiveData();
     }
 
     public LiveData<List<Record>> getAllRecordListLiveData() {
-        Log.d("MAGG", "MainViewModel getUpcomingEventListLiveData: ");
         return repository.getAllRecordLiveData();
     }
 
     public LiveData<List<Record>> getUpcomingEventListLiveData() {
-        Log.d("MAGG", "MainViewModel getUpcomingEventListLiveData: ");
         return repository.getUpcomingEventListLiveData();
     }
 
     public void getUpcomingEventListLiveDataWithToken() {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplication());
         if (account != null) {
-            Log.d("MAGG", "MainViewModel getUpcomingEventListWithToken: " + account.getIdToken());
             repository.getUpcomingEventListLiveDataWithToken("Bearer " + account.getIdToken());
         }
     }
@@ -121,6 +116,13 @@ public class MainViewModel extends AndroidViewModel {
         PreferenceManager.getInstance().storeEventHashMap(hashMap);
     }
 
+    public GoogleSignInOptions getGoogleSignInOptions() {
+        return new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(context.getString(R.string.server_client_id))
+                .requestEmail()
+                .build();
+    }
+
     //==================================DELETE=================================================
 
     public void deleteUser() {
@@ -128,12 +130,10 @@ public class MainViewModel extends AndroidViewModel {
         ApiClient.getInstance().getService().deleteUser(account.getId()).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-
             }
         });
     }
@@ -142,7 +142,6 @@ public class MainViewModel extends AndroidViewModel {
         ApiClient.getInstance().getService().deleteRecord(recordid).enqueue(new Callback<Record>() {
             @Override
             public void onResponse(Call<Record> call, Response<Record> response) {
-
             }
 
             @Override

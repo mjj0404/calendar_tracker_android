@@ -31,14 +31,12 @@ public class AlertDialogWithListener extends DialogFragment {
     }
 
     public AlertDialogWithListener(Context context, int op, DialogOnClickListener listener) {
-        Log.d(TAG, "DeleteConfirmationDialog: ");
         this.context = context;
         this.listener = listener;
         this.operation = op;
     }
 
     public AlertDialogWithListener(Context context, String name, int op, DialogOnClickListener listener) {
-        Log.d(TAG, "DeleteConfirmationDialog: ");
         this.context = context;
         this.name = name;
         this.operation = op;
@@ -48,7 +46,6 @@ public class AlertDialogWithListener extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateDialog: ");
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         String message = "";
         switch (operation) {
@@ -62,7 +59,7 @@ public class AlertDialogWithListener extends DialogFragment {
             case Constants.DIALOG_CREATE_EVENT:
                 message = context.getString(R.string.parse_create_event_confirmation);
                 break;
-            case Constants.DIALOG_DELETE_CONFIRMATION:
+            case Constants.DIALOG_RECORD_DELETE_CONFIRMATION:
                 message = context.getString(R.string.etc_ask_delete_confirmation, name);
                 break;
             case Constants.DIALOG_PARSE_SINGLE_RECORD:
@@ -73,6 +70,9 @@ public class AlertDialogWithListener extends DialogFragment {
                     }
                 });
                 showPositive = false;
+                break;
+            case Constants.DIALOG_DELETE_ACCOUNT:
+                message = context.getString(R.string.setting_account_delete_warning);
                 break;
         }
 

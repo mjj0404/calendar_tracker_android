@@ -6,15 +6,26 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Message;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.*;
 import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.example.calendartracker.CalendarTrackerApplication;
+import com.example.calendartracker.R;
 
 import java.util.Calendar;
 import java.util.TimeZone;
 
 public class CalendarQueryHandler extends AsyncQueryHandler {
     private static final String TAG = "CalendarQueryHandler";
+
+    public interface OnQueryFinishListener {
+        void onQueryFinished(String name);
+    }
 
     // Projection arrays
     private static final String[] CALENDAR_PROJECTION = new String[]
@@ -27,29 +38,30 @@ public class CalendarQueryHandler extends AsyncQueryHandler {
                     CalendarContract.Calendars.OWNER_ACCOUNT                  // 5
             };
 
-    // The indices for the projection array above.
+    private OnQueryFinishListener listener;
     private static final int CALENDAR_ID_INDEX = 0;
 
     private static final int INSERT = 0;
-    private static final int UPDATE = 1;
-    private static final int EVENT    = 2;
+    private static final int EVENT = 2;
     private static final int REMINDER = 3;
 
     private static CalendarQueryHandler CalendarQueryHandler;
 
     // CalendarQueryHandler
-    public CalendarQueryHandler(ContentResolver resolver)
+    public CalendarQueryHandler(ContentResolver resolver, OnQueryFinishListener listener)
     {
         super(resolver);
+        this.listener = listener;
     }
 
     // insertEvent
-    public static void insertEvent(Context context, long timeLong, String title)
+    public static void insertEvent(Context context, long timeLong, String title, OnQueryFinishListener listener)
     {
         ContentResolver resolver = context.getContentResolver();
 
         if (CalendarQueryHandler == null)
-            CalendarQueryHandler = new CalendarQueryHandler(resolver);
+            CalendarQueryHandler = new CalendarQueryHandler(resolver, listener);
+        listener.onQueryFinished(title);
 
         ContentValues values = new ContentValues();
         values.put(Events.DTSTART, timeLong);
@@ -67,11 +79,7 @@ public class CalendarQueryHandler extends AsyncQueryHandler {
     public void onQueryComplete(int token, Object object, Cursor cursor)
     {
         if (token == INSERT) {
-
-            // Use the cursor to move through the returned records
             cursor.moveToFirst();
-
-            // Get the field values
             long calendarID = cursor.getLong(CALENDAR_ID_INDEX);
 
             ContentValues values = (ContentValues) object;
@@ -92,10 +100,18 @@ public class CalendarQueryHandler extends AsyncQueryHandler {
             switch (token)
             {
                 case EVENT:
+                    int reminderSetting = PreferenceManager.getInstance().getReminderSetting();
+                    long eventID = Long.parseLong(uri.getLastPathSegment());
+                    ContentValues values = (ContentValues) object;
+
+//                    Log.d(TAG, "onInsertComplete: ");
+//                    Toast.makeText(CalendarTrackerApplication.getContext(),
+//                            CalendarTrackerApplication.getContext().getApplicationContext().getString(
+//                                    R.string.parse_finished, values.get(Events.TITLE)),
+//                            Toast.LENGTH_LONG).show();
+
+
                     if (PreferenceManager.getInstance().isAddingReminder()) {
-                        int reminderSetting = PreferenceManager.getInstance().getReminderSetting();
-                        long eventID = Long.parseLong(uri.getLastPathSegment());
-                        ContentValues values = (ContentValues) object;
                         if (reminderSetting == Constants.REMIND_DAY_BEFORE) {
                             values.put(Reminders.MINUTES, 1440);
                         }

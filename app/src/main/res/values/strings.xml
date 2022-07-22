@@ -37,6 +37,7 @@
         parsed into your Google Calendar. Proceed?</string>
     <string name="parse_single_item_confirmation">You\'re about to be directed to Google Calendar.
         Manually adding events to Google Calendar may cause duplicate events. Proceed? </string>
+    <string name="parse_finished">Finished Parsing %1$s to Calendar</string>
 
 
     <!--SETTING-->

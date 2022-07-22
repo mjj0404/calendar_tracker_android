@@ -91,7 +91,8 @@ public class MainViewModel extends AndroidViewModel {
         repository.getRecord(recordid);
     }
 
-    public void queryUpcomingEventList(List<Record> recordList) {
+    public void queryUpcomingEventList(List<Record> recordList,
+                                       CalendarQueryHandler.OnQueryFinishListener listener) {
         Map<String, String> hashMap = PreferenceManager.getInstance().loadEventHashMap();
         recordList.forEach(record -> {
             Event upcomingEvent = EventConverter.upcomingEvent(record.getCalendarid());
@@ -103,14 +104,18 @@ public class MainViewModel extends AndroidViewModel {
                 if (!upcomingEvent.equals(eventValue)) {
                     hashMap.put(record.toString(), upcomingEvent.toString());
                     CalendarQueryHandler.insertEvent(context,
-                            upcomingEventCalendar.getTimeInMillis(), record.getName());
+                            upcomingEventCalendar.getTimeInMillis(),
+                            record.getName(),
+                            listener);
                 }
             }
             else {
                 //put new value to hashmap and insert query
                 hashMap.put(record.toString(), upcomingEvent.toString());
                 CalendarQueryHandler.insertEvent(context,
-                        upcomingEventCalendar.getTimeInMillis(), record.getName());
+                        upcomingEventCalendar.getTimeInMillis(),
+                        record.getName(),
+                        listener);
             }
         });
         PreferenceManager.getInstance().storeEventHashMap(hashMap);

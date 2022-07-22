@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -62,65 +63,71 @@ public class EventFragment extends Fragment {
     private static final String TAG = "EventFragment";
 
     private ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(
-            new ActivityResultContracts.RequestMultiplePermissions(),
-            new ActivityResultCallback<Map<String, Boolean>>() {
-                @Override
-                public void onActivityResult(Map<String, Boolean> result) {
-                    if (isPermissionGranted(result.values())) {
-                        AlertDialogWithListener dialog = new AlertDialogWithListener(
-                                requireActivity(),
-                                Constants.DIALOG_CREATE_EVENT,
-                                new AlertDialogWithListener.DialogOnClickListener() {
+        new ActivityResultContracts.RequestMultiplePermissions(),
+        new ActivityResultCallback<Map<String, Boolean>>() {
+            @Override
+            public void onActivityResult(Map<String, Boolean> result) {
+                if (isPermissionGranted(result.values())) {
+                    AlertDialogWithListener dialog = new AlertDialogWithListener(
+                        requireActivity(),
+                        Constants.DIALOG_CREATE_EVENT,
+                        new AlertDialogWithListener.DialogOnClickListener() {
+                            @Override
+                            public void onConfirmClick() {
+                                viewModel.queryUpcomingEventList(upcomingEventList, new CalendarQueryHandler.OnQueryFinishListener() {
                                     @Override
-                                    public void onConfirmClick() {
-                                        viewModel.queryUpcomingEventList(upcomingEventList);
+                                    public void onQueryFinished(String name) {
+                                        Toast.makeText(requireActivity(),
+                                                requireActivity().getString(R.string.parse_finished, name),
+                                                Toast.LENGTH_SHORT).show();
                                     }
-
-                                    @Override
-                                    public void onCancelClick() {
-                                    }
-                                }
-                        );
-                        dialog.onCreateDialog(null).show();
-                    }
-                    else if (shouldShowRequestPermissionRationale(Constants.PERMISSIONS[0]) ||
-                            shouldShowRequestPermissionRationale(Constants.PERMISSIONS[1])) {
-                        AlertDialogWithListener dialog = new AlertDialogWithListener(
-                                requireActivity(),
-                                Constants.DIALOG_PERMISSION_SHORT,
-                                new AlertDialogWithListener.DialogOnClickListener() {
-                                    @Override
-                                    public void onConfirmClick() { }
-
-                                    @Override
-                                    public void onCancelClick() { }
-                                }
-                        );
-                        dialog.onCreateDialog(null).show();
-                    }
-                    else if (!isPermissionGranted(result.values())) {
-                        AlertDialogWithListener dialog = new AlertDialogWithListener(
-                                requireActivity(),
-                                Constants.DIALOG_PERMISSION_LONG,
-                                new AlertDialogWithListener.DialogOnClickListener() {
-                                    @Override
-                                    public void onConfirmClick() {
-                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
-                                        intent.setData(uri);
-                                        startActivity(intent);
-                                    }
-
-                                    @Override
-                                    public void onCancelClick() { }
-                                }
-                        );
-                        dialog.onCreateDialog(null).show();
-                    }
-
+                                });
+                            }
+                            @Override
+                            public void onCancelClick() {
+                            }
+                        }
+                    );
+                    dialog.onCreateDialog(null).show();
                 }
-            });
+                else if (shouldShowRequestPermissionRationale(Constants.PERMISSIONS[0]) ||
+                        shouldShowRequestPermissionRationale(Constants.PERMISSIONS[1])) {
+                    AlertDialogWithListener dialog = new AlertDialogWithListener(
+                        requireActivity(),
+                        Constants.DIALOG_PERMISSION_SHORT,
+                        new AlertDialogWithListener.DialogOnClickListener() {
+                            @Override
+                            public void onConfirmClick() { }
+
+                            @Override
+                            public void onCancelClick() { }
+                        }
+                    );
+                    dialog.onCreateDialog(null).show();
+                }
+                else if (!isPermissionGranted(result.values())) {
+                    AlertDialogWithListener dialog = new AlertDialogWithListener(
+                        requireActivity(),
+                        Constants.DIALOG_PERMISSION_LONG,
+                        new AlertDialogWithListener.DialogOnClickListener() {
+                            @Override
+                            public void onConfirmClick() {
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+                                intent.setData(uri);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onCancelClick() { }
+                        }
+                    );
+                    dialog.onCreateDialog(null).show();
+                }
+
+            }
+        });
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

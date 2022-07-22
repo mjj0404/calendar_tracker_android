@@ -1,6 +1,5 @@
 package com.example.calendartracker.ui.record;
 
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,19 +12,12 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.MenuItemCompat;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
-import androidx.navigation.NavOptions;
-import androidx.navigation.Navigation;
-import androidx.navigation.Navigator;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -56,7 +48,6 @@ public class RecordFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         MainViewModel viewModel =
                 new ViewModelProvider(this).get(MainViewModel.class);
-        Log.d("MAGG", "onCreateView: Home Frag");
 
         binding = FragmentRecordBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -125,7 +116,7 @@ public class RecordFragment extends Fragment {
                     AlertDialogWithListener dialog = new AlertDialogWithListener(
                             requireActivity(),
                             record.getName(),
-                            Constants.DIALOG_DELETE_CONFIRMATION,
+                            Constants.DIALOG_RECORD_DELETE_CONFIRMATION,
                             new AlertDialogWithListener.DialogOnClickListener() {
                                 @Override
                                 public void onConfirmClick() {

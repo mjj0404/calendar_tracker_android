@@ -1,6 +1,7 @@
 package com.example.calendartracker.ui.setting;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,27 +11,33 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.calendartracker.CalendarTrackerApplication;
-import com.example.calendartracker.MainActivity;
 import com.example.calendartracker.R;
+import com.example.calendartracker.SignInActivity;
 import com.example.calendartracker.databinding.FragmentSettingBinding;
+import com.example.calendartracker.ui.onboarding.OnboardingActivity;
+import com.example.calendartracker.utility.AlertDialogWithListener;
 import com.example.calendartracker.utility.Constants;
 import com.example.calendartracker.utility.PreferenceManager;
 import com.example.calendartracker.viewmodel.MainViewModel;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
-import java.util.Objects;
-
-public class SettingFragment extends Fragment implements RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
+public class SettingFragment extends Fragment implements
+        View.OnClickListener,
+        RadioGroup.OnCheckedChangeListener,
+        CompoundButton.OnCheckedChangeListener {
 
     private FragmentSettingBinding binding;
     private static final String TAG = "SettingFragment";
@@ -39,6 +46,8 @@ public class SettingFragment extends Fragment implements RadioGroup.OnCheckedCha
     private RadioGroup reminderRadioGroup;
     private Switch remindSwitch;
     private LinearLayout remindLayout;
+    private TextView signOutTextView;
+    private TextView deleteAccountTextView;
 
     private MainViewModel viewModel;
 
@@ -59,6 +68,11 @@ public class SettingFragment extends Fragment implements RadioGroup.OnCheckedCha
         reminderRadioGroup = view.findViewById(R.id.setting_remind_me_before_radiogroup);
         remindSwitch = view.findViewById(R.id.setting_reminder_switch);
         remindLayout = view.findViewById(R.id.setting_reminder_layout);
+        signOutTextView = view.findViewById(R.id.setting_account_sign_out_textview);
+        deleteAccountTextView = view.findViewById(R.id.setting_account_delete_textview);
+
+        signOutTextView.setOnClickListener(this);
+        deleteAccountTextView.setOnClickListener(this);
 
         themeRadioGroup.setOnCheckedChangeListener(this);
         reminderRadioGroup.setOnCheckedChangeListener(this);
@@ -66,16 +80,6 @@ public class SettingFragment extends Fragment implements RadioGroup.OnCheckedCha
 
         setThemeRadioGroup();
         setEventUploadView();
-
-//        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                Log.d(TAG, "handleOnBackPressed: ");
-//                requireActivity().finish();
-//                System.exit(0);
-//            }
-//        };
-//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
     }
 
     @Override
@@ -94,15 +98,12 @@ public class SettingFragment extends Fragment implements RadioGroup.OnCheckedCha
             switch (checkedId) {
                 case R.id.setting_system_theme_radiobutton:
                     CalendarTrackerApplication.setApplicationTheme(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                    Log.d(TAG, "onCheckedChanged: ");
                     break;
                 case R.id.setting_light_theme_radiobutton:
                     CalendarTrackerApplication.setApplicationTheme(AppCompatDelegate.MODE_NIGHT_NO);
-                    Log.d(TAG, "onCheckedChanged: ");
                     break;
                 case R.id.setting_dark_theme_radiobutton:
                     CalendarTrackerApplication.setApplicationTheme(AppCompatDelegate.MODE_NIGHT_YES);
-                    Log.d(TAG, "onCheckedChanged: ");
                     break;
             }
         }
@@ -151,28 +152,10 @@ public class SettingFragment extends Fragment implements RadioGroup.OnCheckedCha
                 themeRadioGroup.check(R.id.setting_dark_theme_radiobutton);
                 break;
         }
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume: MainActivity");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     @SuppressLint("NonConstantResourceId")
     private void setEventUploadView() {
-        // TODO : REMINDER || REMINDER_SETTING
         remindSwitch.setChecked(PreferenceManager.getInstance().isAddingReminder());
         if (PreferenceManager.getInstance().isAddingReminder()) {
             remindLayout.setVisibility(View.VISIBLE);
@@ -187,6 +170,54 @@ public class SettingFragment extends Fragment implements RadioGroup.OnCheckedCha
             case Constants.REMIND_HOUR_BEFORE:
                 reminderRadioGroup.check(R.id.setting_before_hour_radiobutton);
                 break;
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        GoogleSignInClient client = GoogleSignIn.getClient(requireActivity(), viewModel.getGoogleSignInOptions());
+        if (view.getId() == R.id.setting_account_sign_out_textview) {
+            client.signOut()
+                    .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(requireActivity(),
+                                    requireActivity().getString(R.string.setting_account_signed_out),
+                                    Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(requireActivity(), SignInActivity.class);
+                            intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                            startActivity(intent);
+                        }
+                    });
+
+        }
+        else if (view.getId() == R.id.setting_account_delete_textview) {
+            AlertDialogWithListener listener = new AlertDialogWithListener(
+                    requireActivity(),
+                    Constants.DIALOG_DELETE_ACCOUNT,
+                    new AlertDialogWithListener.DialogOnClickListener() {
+                        @Override
+                        public void onConfirmClick() {
+                            viewModel.deleteUser();
+                            client.revokeAccess()
+                                    .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Toast.makeText(requireActivity(),
+                                                    requireActivity().getString(R.string.setting_account_deleted),
+                                                    Toast.LENGTH_SHORT).show();
+                                            PreferenceManager.getInstance().setFirstTime(true);
+                                            Intent intent = new Intent(requireActivity(), OnboardingActivity.class);
+                                            intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                            startActivity(intent);
+                                        }
+                                    });
+                        }
+                        @Override
+                        public void onCancelClick() { }
+                    }
+            );
+            listener.onCreateDialog(null).show();
         }
     }
 }

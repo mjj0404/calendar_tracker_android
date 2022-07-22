@@ -13,7 +13,6 @@ import java.util.Map;
 
 public class PreferenceManager {
     private static final String PREF_NAME = "com.example.app.PREF_NAME";
-    private static final String KEY_VALUE = "com.example.app.KEY_VALUE";
 
     private static PreferenceManager instance;
     private final SharedPreferences pref;
@@ -117,16 +116,6 @@ public class PreferenceManager {
 
     public int getTheme() {
         return pref.getInt(Constants.THEME_SELECTION, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-    }
-
-    public void setValue(long value) {
-        pref.edit()
-                .putLong(KEY_VALUE, value)
-                .commit();
-    }
-
-    public long getValue() {
-        return pref.getLong(KEY_VALUE, 0);
     }
 
     public void remove(String key) {

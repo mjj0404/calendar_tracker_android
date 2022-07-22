@@ -49,6 +49,14 @@
     <string name="setting_remind_me"><b>Set reminder before the event</b></string>
     <string name="setting_before_hour">1 hour</string>
     <string name="setting_before_day">1 day</string>
+    <string name="setting_account"><b>Account</b></string>
+    <string name="setting_account_delete">Delete Account</string>
+    <string name="setting_account_sign_out">Sign out</string>
+    <string name="setting_account_signed_out">Successfully signed out.</string>
+    <string name="setting_account_deleted">Successfully deleted.</string>
+    <string name="setting_account_delete_warning">All of your data stored will be deleted. Are
+        you sure?</string>
+
 
 
     <!--ETC-->

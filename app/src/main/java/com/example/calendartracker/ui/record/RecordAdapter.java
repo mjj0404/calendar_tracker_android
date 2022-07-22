@@ -39,7 +39,6 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 filteredList.addAll(recordListFiltered);
             }
             else {
-                Log.d(TAG, "performFiltering: ");
                 String stringFilter = charSequence.toString().toLowerCase().trim();
                 for (Record record:recordListFiltered) {
                     if (record.getName().toLowerCase().trim().contains(stringFilter)) {

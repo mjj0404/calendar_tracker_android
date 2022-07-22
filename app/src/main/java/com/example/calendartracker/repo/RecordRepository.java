@@ -25,12 +25,10 @@ public class RecordRepository {
     public RecordRepository () {}
 
     public LiveData<List<Record>> getAllRecordLiveData() {
-        Log.d("MAGG", "Repository getUpcomingEventListLiveData: ");
         return allRecordList;
     }
 
     public LiveData<List<Record>> getUpcomingEventListLiveData() {
-        Log.d("MAGG", "Repository getUpcomingEventListLiveData: ");
         return upcomingEventListLiveData;
     }
 
@@ -39,15 +37,12 @@ public class RecordRepository {
             @Override
             public void onResponse(Call<List<Record>> call, Response<List<Record>> response) {
                 if (response.body() != null) {
-                    Log.d("MAGG", "onResponse: ");
                     upcomingEventListLiveData.postValue(response.body());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Record>> call, Throwable t) {
-                Log.d("MAGG", "onFailure: ");
-            }
+            public void onFailure(Call<List<Record>> call, Throwable t) { }
         });
     }
 

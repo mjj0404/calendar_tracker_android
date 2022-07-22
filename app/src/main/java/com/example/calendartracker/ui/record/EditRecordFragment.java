@@ -110,11 +110,10 @@ public class EditRecordFragment extends Fragment implements TextWatcher{
                     AlertDialogWithListener dialog = new AlertDialogWithListener(
                             requireActivity(),
                             recordName,
-                            Constants.DIALOG_DELETE_CONFIRMATION,
+                            Constants.DIALOG_RECORD_DELETE_CONFIRMATION,
                             new AlertDialogWithListener.DialogOnClickListener() {
                                 @Override
                                 public void onConfirmClick() {
-                                    Log.d(TAG, "DeleteConfirmation onConfirmClick: ");
                                     viewModel.deleteRecord(getArguments().getInt(Constants.RECORD_ID));
                                     Toast.makeText(requireActivity().getApplicationContext(),
                                             getString(R.string.edit_record_user_deleted, recordName),
@@ -123,9 +122,7 @@ public class EditRecordFragment extends Fragment implements TextWatcher{
                                 }
 
                                 @Override
-                                public void onCancelClick() {
-                                    Log.d(TAG, "DeleteConfirmation onCancelClick: ");
-                                }
+                                public void onCancelClick() { }
                             });
                     dialog.onCreateDialog(null).show();
                 }

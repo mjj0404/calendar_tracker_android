@@ -18,11 +18,15 @@ public class Constants {
     public static final int RECORD_INPUT_EMPTY_NAME = 1;
     public static final int RECORD_INPUT_INVALID_DATE = 2;
 
-    public static final int DIALOG_PERMISSION_SHORT = 9;
-    public static final int DIALOG_PERMISSION_LONG = 10;
-    public static final int DIALOG_CREATE_EVENT = 11;
-    public static final int DIALOG_DELETE_CONFIRMATION = 12;
-    public static final int DIALOG_PARSE_SINGLE_RECORD = 13;
+    // DIALOG OPERATIONS
+    public static final int DIALOG_PERMISSION_SHORT = 101;
+    public static final int DIALOG_PERMISSION_LONG = 102;
+    public static final int DIALOG_CREATE_EVENT = 103;
+    public static final int DIALOG_RECORD_DELETE_CONFIRMATION = 104;
+    public static final int DIALOG_PARSE_SINGLE_RECORD = 105;
+    public static final int DIALOG_DELETE_ACCOUNT = 106;
+
+
 
     public static final String DIALOG_DO_NOT_ASK = "DIALOG_DO_NOT_ASK";
 

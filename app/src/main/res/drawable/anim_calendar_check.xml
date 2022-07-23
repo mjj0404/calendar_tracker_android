@@ -1,0 +1,254 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="310dp"
+            android:height="310dp"
+            android:viewportWidth="310"
+            android:viewportHeight="310">
+            <path
+                android:name="circle"
+                android:pathData="M 0 50 C 51.667 50 103.333 50 155 50 L 310 50 C 310 136.667 310 223.333 310 310 C 206.667 310 103.333 310 0 310 C 0 223.333 0 136.667 0 50 M 154.5 154.5 C 154.5 154.5 154.5 154.5 154.5 154.5 C 154.5 154.5 154.5 154.5 154.5 154.5 C 154.5 154.5 154.5 154.5 154.5 154.5 C 154.5 154.5 154.5 154.5 154.5 154.5 L 154.5 154.5"
+                android:fillColor="#d4b7f9"
+                android:strokeWidth="3"/>
+            <path
+                android:name="cal_top"
+                android:pathData="M 0 30 L 155 30 L 155 90 L 0 90 Z"
+                android:fillColor="#0052B4"/>
+            <path
+                android:name="cal_top_1"
+                android:pathData="M 155 30 L 310 30 L 310 90 L 155 90 Z"
+                android:fillColor="#006DF0"/>
+            <path
+                android:name="cal_top_2"
+                android:pathData="M 215 0 L 245 0 L 245 60 L 215 60 Z"
+                android:fillColor="#003778"/>
+            <path
+                android:name="cal_top_3"
+                android:pathData="M 65 0 L 95 0 L 95 60 L 65 60 Z"
+                android:fillColor="#003778"
+                android:trimPathStart="1"/>
+            <path
+                android:name="cal_1"
+                android:pathData="M 30 140 L 80 140 L 80 170 L 30 170 Z"
+                android:fillColor="#0052B4"/>
+            <path
+                android:name="cal_2"
+                android:pathData="M 80 140 L 280 140 L 280 170 L 80 170 Z"
+                android:fillColor="#7C84E8"/>
+            <path
+                android:name="cal_3"
+                android:pathData="M 30 170 L 80 170 L 80 260 L 30 260 Z"
+                android:fillColor="#7C84E8"/>
+            <path
+                android:name="cal_4"
+                android:pathData="M 80 170 L 130 170 L 130 200 L 80 200 Z"
+                android:fillColor="#FFFFFF"/>
+            <path
+                android:name="cal_5"
+                android:pathData="M 130 170 L 180 170 L 180 200 L 130 200 Z"
+                android:fillColor="#78B9EB"/>
+            <path
+                android:name="cal_6"
+                android:pathData="M 180 170 L 230 170 L 230 200 L 180 200 Z"
+                android:fillColor="#FFFFFF"/>
+            <path
+                android:name="cal_7"
+                android:pathData="M 230 170 L 280 170 L 280 200 L 230 200 Z"
+                android:fillColor="#78B9EB"/>
+            <path
+                android:name="cal_8"
+                android:pathData="M 80 200 L 130 200 L 130 230 L 80 230 Z"
+                android:fillColor="#78B9EB"/>
+            <path
+                android:name="cal_9"
+                android:pathData="M 130 200 L 180 200 L 180 230 L 130 230 Z"
+                android:fillColor="#FFFFFF"/>
+            <path
+                android:name="cal_10"
+                android:pathData="M 180 200 L 230 200 L 230 230 L 180 230 Z"
+                android:fillColor="#78B9EB"/>
+            <path
+                android:name="check"
+                android:pathData="M 212.43 99.88 L 132.98 179.33 L 96.56 142.91 C 91.08 137.43 82.18 137.42 76.7 142.91 C 71.21 148.4 71.21 157.29 76.7 162.77 L 123.05 209.12 C 125.68 211.75 129.26 213.23 132.98 213.23 C 132.98 213.23 132.98 213.23 132.98 213.23 C 136.7 213.23 140.28 211.75 142.91 209.12 L 232.3 119.74 C 237.79 114.25 237.79 105.36 232.3 99.88 C 226.81 94.39 217.92 94.39 212.44 99.88 Z"
+                android:fillColor="#bb86fc"
+                android:strokeWidth="2"/>
+            <path
+                android:name="cal_11"
+                android:pathData="M 230 200 L 280 200 L 280 230 L 230 230 Z"
+                android:fillColor="#FFFFFF"/>
+            <path
+                android:name="cal_12"
+                android:pathData="M 80 230 L 130 230 L 130 260 L 80 260 Z"
+                android:fillColor="#FFFFFF"/>
+            <path
+                android:name="cal_13"
+                android:pathData="M 130 230 L 180 230 L 180 260 L 130 260 Z"
+                android:fillColor="#78B9EB"/>
+            <path
+                android:name="cal_14"
+                android:pathData="M 180 230 L 230 230 L 230 260 L 180 260 Z"
+                android:fillColor="#FFFFFF"/>
+            <path
+                android:name="cal_15"
+                android:pathData="M 230 230 L 280 230 L 280 260 L 230 260 Z"
+                android:fillColor="#78B9EB"/>
+        </vector>
+    </aapt:attr>
+    <target android:name="check">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="pathData"
+                android:duration="1000"
+                android:valueFrom="M 142.91 209.12 L 232.3 119.74 C 237.79 114.25 237.79 105.36 232.3 99.88 C 226.81 94.39 217.92 94.39 212.44 99.88 L 212.43 99.88 L 132.98 179.33 L 96.56 142.91 C 91.08 137.43 82.18 137.42 76.7 142.91 C 71.21 148.4 71.21 157.29 76.7 162.77 L 123.05 209.12 C 125.68 211.75 129.26 213.23 132.98 213.23 C 132.98 213.23 132.98 213.23 132.98 213.23 C 136.7 213.23 140.28 211.75 142.91 209.12"
+                android:valueTo="M 180 200 L 230 200 C 230 201.111 230 202.222 230 203.333 C 230 204.444 230 205.556 230 206.667 L 230 210 L 230 213.333 L 230 216.667 C 230 217.778 230 218.889 230 220 C 230 221.111 230 222.222 230 223.333 L 230 226.667 C 230 227.778 230 228.889 230 230 C 213.333 230 196.667 230 180 230 C 180 220 180 210 180 200"
+                android:valueType="pathType"
+                android:interpolator="@android:anim/anticipate_overshoot_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="circle">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:duration="1000"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/decelerate_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="cal_4">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:duration="1000"
+                android:valueFrom="0"
+                android:valueTo="0.8"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="cal_5">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:duration="1000"
+                android:valueFrom="0"
+                android:valueTo="0.8"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="cal_6">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:duration="1000"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="cal_7">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:duration="1000"
+                android:valueFrom="0"
+                android:valueTo="0.8"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="cal_8">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:duration="1000"
+                android:valueFrom="0"
+                android:valueTo="0.8"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="cal_9">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:duration="1000"
+                android:valueFrom="0"
+                android:valueTo="0.8"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="cal_10">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:duration="1000"
+                android:valueFrom="0"
+                android:valueTo="0.8"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="cal_11">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:duration="1000"
+                android:valueFrom="0"
+                android:valueTo="0.8"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="cal_15">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:duration="1000"
+                android:valueFrom="0"
+                android:valueTo="0.8"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="cal_14">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:duration="1000"
+                android:valueFrom="0"
+                android:valueTo="0.8"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="cal_13">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:duration="1000"
+                android:valueFrom="0"
+                android:valueTo="0.8"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+    <target android:name="cal_12">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:duration="1000"
+                android:valueFrom="0"
+                android:valueTo="0.8"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"/>
+        </aapt:attr>
+    </target>
+</animated-vector>

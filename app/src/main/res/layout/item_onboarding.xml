@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_200"
+    android:background="@color/purple_200"
     android:padding="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -24,8 +24,6 @@
         android:id="@+id/onboard_sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/teal_200"
-        android:backgroundTint="@color/teal_200"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/onboarding_description_textView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +45,8 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/teal_200"
+        android:backgroundTint="@color/purple_150"
+        android:progressTint="@color/purple_200"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

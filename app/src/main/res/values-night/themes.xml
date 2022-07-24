@@ -20,8 +20,13 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
-    <style name="SplashScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.CalendarTracker.SplashScreen" parent="Theme.SplashScreen">
         <item name="colorPrimary">@color/white</item>
-        <item name="android:windowBackground">@color/white</item>
+        <item name="windowSplashScreenBackground">@color/purple_500</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_test_calendar</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/purple_700</item>
+        <item name="postSplashScreenTheme">@style/Theme.CalendarTracker</item>
+        <item name="android:windowSplashScreenBrandingImage" tools:targetApi="s">@drawable/ic_bitjam_logo</item>
     </style>
 </resources>

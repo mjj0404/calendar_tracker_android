@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/navigation_upcoming_event"
-        android:icon="@drawable/avd_anim"
+        android:icon="@drawable/event_available_fill0_wght400_grad0_opsz48"
         android:title="@string/title_upcoming_event" />
 
     <item

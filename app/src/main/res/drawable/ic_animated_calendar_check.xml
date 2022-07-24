@@ -1,0 +1,121 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="160dp"
+            android:height="160dp"
+            android:viewportWidth="160"
+            android:viewportHeight="160">
+            <path
+                android:name="path"
+                android:pathData="M 44 44 L 116 44 L 116 116 L 44 116 Z"
+                android:fillColor="#D4B7F9"/>
+            <path
+                android:name="path_1"
+                android:pathData="M 44 50.97 L 80 50.97 L 80 64.91 L 44 64.91 Z"
+                android:fillColor="#0052B4"/>
+            <path
+                android:name="path_2"
+                android:pathData="M 80 50.97 L 116 50.97 L 116 64.91 L 80 64.91 Z"
+                android:fillColor="#006DF0"/>
+            <path
+                android:name="path_3"
+                android:pathData="M 50.97 76.52 L 62.58 76.52 L 62.58 83.49 L 50.97 83.49 Z"
+                android:fillColor="#0052B4"/>
+            <path
+                android:name="path_4"
+                android:pathData="M 62.58 76.52 L 109.03 76.52 L 109.03 83.49 L 62.58 83.49 Z"
+                android:fillColor="#7C84E8"/>
+            <path
+                android:name="path_5"
+                android:pathData="M 62.58 83.48 L 74.19 83.48 L 74.19 90.45 L 62.58 90.45 Z"
+                android:fillColor="#FFFFFF"/>
+            <path
+                android:name="path_6"
+                android:pathData="M 74.19 83.48 L 85.8 83.48 L 85.8 90.45 L 74.19 90.45 Z"
+                android:fillColor="#78B9EB"/>
+            <path
+                android:name="path_7"
+                android:pathData="M 85.81 83.48 L 97.42 83.48 L 97.42 90.45 L 85.81 90.45 Z"
+                android:fillColor="#FFFFFF"/>
+            <path
+                android:name="path_8"
+                android:pathData="M 97.42 83.48 L 109.03 83.48 L 109.03 90.45 L 97.42 90.45 Z"
+                android:fillColor="#78B9EB"/>
+            <path
+                android:name="path_9"
+                android:pathData="M 62.58 97.42 L 74.19 97.42 L 74.19 104.39 L 62.58 104.39 Z"
+                android:fillColor="#FFFFFF"/>
+            <path
+                android:name="path_10"
+                android:pathData="M 74.19 97.42 L 85.8 97.42 L 85.8 104.39 L 74.19 104.39 Z"
+                android:fillColor="#78B9EB"/>
+            <path
+                android:name="path_11"
+                android:pathData="M 85.81 97.42 L 97.42 97.42 L 97.42 104.39 L 85.81 104.39 Z"
+                android:fillColor="#FFFFFF"/>
+            <path
+                android:name="path_12"
+                android:pathData="M 97.42 97.42 L 109.03 97.42 L 109.03 104.39 L 97.42 104.39 Z"
+                android:fillColor="#78B9EB"/>
+            <path
+                android:name="path_13"
+                android:pathData="M 97.42 90.45 L 109.03 90.45 L 109.03 97.42 L 97.42 97.42 Z"
+                android:fillColor="#FFFFFF"/>
+            <path
+                android:name="path_15"
+                android:pathData="M 74.19 90.45 L 85.8 90.45 L 85.8 97.42 L 74.19 97.42 Z"
+                android:fillColor="#FFFFFF"/>
+            <path
+                android:name="path_16"
+                android:pathData="M 62.58 90.45 L 74.19 90.45 L 74.19 97.42 L 62.58 97.42 Z"
+                android:fillColor="#78B9EB"/>
+            <path
+                android:name="path_17"
+                android:pathData="M 50.97 83.48 L 62.58 83.48 L 62.58 104.38 L 50.97 104.38 Z"
+                android:fillColor="#7C84E8"/>
+            <path
+                android:name="path_18"
+                android:pathData="M 93.94 44 L 100.91 44 L 100.91 57.94 L 93.94 57.94 Z"
+                android:fillColor="#003778"/>
+            <path
+                android:name="path_19"
+                android:pathData="M 59.1 44 L 66.07 44 L 66.07 57.94 L 59.1 57.94 Z"
+                android:fillColor="#003778"/>
+            <path
+                android:name="path_14"
+                android:pathData="M 85.81 90.45 L 97.42 90.45 L 97.42 97.42 L 85.81 97.42 Z"
+                android:fillColor="#78B9EB"/>
+        </vector>
+    </aapt:attr>
+    <target android:name="path_14">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:duration="1199"
+                    android:valueFrom="M 85.81 90.45 L 97.42 90.45 C 97.42 91.224 97.42 91.999 97.42 92.773 C 97.42 93.548 97.42 94.322 97.42 95.097 L 97.42 97.42 L 85.81 97.42 C 85.81 96.955 85.81 96.491 85.81 96.026 L 85.81 94.632 C 85.81 94.167 85.81 93.703 85.81 93.238 C 85.81 92.773 85.81 92.309 85.81 91.844 L 85.81 90.45"
+                    android:valueTo="M 70.81 84.08 L 103.7 46.42 C 106.51 43.2 111.08 43.2 113.89 46.42 C 116.7 49.64 116.7 54.86 113.89 58.09 L 113.89 58.09 L 75.91 101.58 C 73.1 104.8 68.53 104.8 65.72 101.58 L 46.11 79.13 C 43.3 75.91 43.3 70.68 46.11 67.46 C 48.92 64.24 53.49 64.24 56.3 67.46 L 70.81 84.08"
+                    android:valueType="pathType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="fillAlpha"
+                    android:startOffset="1199"
+                    android:duration="1"
+                    android:valueFrom="1"
+                    android:valueTo="0"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="fillColor"
+                    android:duration="1200"
+                    android:valueFrom="#78B9EB"
+                    android:valueTo="#bb86fc"
+                    android:valueType="colorType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            </set>
+        </aapt:attr>
+    </target>
+</animated-vector>

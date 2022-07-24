@@ -104,13 +104,6 @@ public class CalendarQueryHandler extends AsyncQueryHandler {
                     long eventID = Long.parseLong(uri.getLastPathSegment());
                     ContentValues values = (ContentValues) object;
 
-//                    Log.d(TAG, "onInsertComplete: ");
-//                    Toast.makeText(CalendarTrackerApplication.getContext(),
-//                            CalendarTrackerApplication.getContext().getApplicationContext().getString(
-//                                    R.string.parse_finished, values.get(Events.TITLE)),
-//                            Toast.LENGTH_LONG).show();
-
-
                     if (PreferenceManager.getInstance().isAddingReminder()) {
                         if (reminderSetting == Constants.REMIND_DAY_BEFORE) {
                             values.put(Reminders.MINUTES, 1440);

@@ -8,7 +8,7 @@ Below is an example of inconsistant date difference among popular calendars wher
 |2021.01.01|2021.02.12|1442.05.17(Jumada)|
 |2022.01.01|2022.02.01|1443.05.28(Jumada)|
 
-Each Calendar date system have different way of adding leap year or month, thus make it very hard to track without an effort.
+Each Calendar date system have different way of adding leap year or month, thus make it very hard to track without an effort.<br />
 Currently this application only support Eastern Lunar Calendar with such a great help from the [repository](https://github.com/isee15/Lunar-Solar-Calendar-Converter), thanks to [isee15](https://github.com/isee15)
 
 Currently under open testing for Google Playstore

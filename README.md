@@ -9,7 +9,7 @@ Below is an example of inconsistant date difference among popular calendars wher
 |2022.01.01|2022.02.01|1443.05.28(Jumada)|
 
 Each Calendar date system have different way of adding leap year or month, thus make it very hard to track without an effort.<br />
-Currently this application only support Eastern Lunar Calendar with such a great help from the [repository](https://github.com/isee15/Lunar-Solar-Calendar-Converter), thanks to [isee15](https://github.com/isee15)
+Currently this application only support Eastern Lunar Calendar with such a great help from the github [repository](https://github.com/isee15/Lunar-Solar-Calendar-Converter), thanks to [isee15](https://github.com/isee15)
 
 Under open testing for Google Playstore as of 08.26.2022 <br/>
 API Requirement : 26 and above

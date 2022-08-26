@@ -4,7 +4,7 @@
 
 |<img src="https://user-images.githubusercontent.com/31434297/186846380-680f5bfc-8285-4552-a7fe-6b598f8afddd.gif" width="180" height="327"/>|<img src="https://user-images.githubusercontent.com/31434297/186846394-e8a165be-1793-4ab6-8bfa-73ba85e095d7.gif" width="180" height="327"/>|
 | --- | --- |
-|Animated Vector Drawable Splash screen (API > 30 Only)|Lotti-animated Onboarding flow|
+|Animated Vector Drawable<br/>Splash screen (API > 30 Only)|Lotti-animated Onboarding flow|
 
 Main use of this application is to keep track of an event that is in different calendar.<br />
 Below is an example of inconsistant date difference among popular calendars where eastern lunar calendar is commonly known as Chinese Lunar Calendar

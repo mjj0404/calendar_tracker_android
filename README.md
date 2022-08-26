@@ -2,9 +2,8 @@
 
 |<img src="https://user-images.githubusercontent.com/31434297/186844357-efefb55c-83d2-4817-b24c-3c2985c0eeef.png" width="180" height="327"/>|<img src="https://user-images.githubusercontent.com/31434297/186844358-6bf0a157-baba-4c48-a5c2-fa192a2d2499.png" width="180" height="327"/>|<img src="https://user-images.githubusercontent.com/31434297/186844359-34150cad-68f7-4983-a589-6519acfffa79.png" width="180" height="327"/>|
 
-<img src="https://user-images.githubusercontent.com/31434297/186846380-680f5bfc-8285-4552-a7fe-6b598f8afddd.gif" width="180" height="327"/>
-
-<img src="https://user-images.githubusercontent.com/31434297/186846394-e8a165be-1793-4ab6-8bfa-73ba85e095d7.gif" width="180" height="327"/>
+|<img src="https://user-images.githubusercontent.com/31434297/186846380-680f5bfc-8285-4552-a7fe-6b598f8afddd.gif" width="180" height="327"/>|<img src="https://user-images.githubusercontent.com/31434297/186846394-e8a165be-1793-4ab6-8bfa-73ba85e095d7.gif" width="180" height="327"/>|
+|Animated Vector Drawable Splash screen (API > 30 Only)|Lotti-animated Onboarding flow|
 
 Main use of this application is to keep track of an event that is in different calendar.<br />
 Below is an example of inconsistant date difference among popular calendars where eastern lunar calendar is commonly known as Chinese Lunar Calendar

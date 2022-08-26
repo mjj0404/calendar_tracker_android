@@ -1,6 +1,6 @@
 # Calendar Tracker
 
-Main use of this application is to keep track of an event that is in different calendar.
+Main use of this application is to keep track of an event that is in different calendar.<br />
 Below is an example of inconsistant date difference among popular calendars where eastern lunar calendar is commonly known as Chinese Lunar Calendar
 | Eastern Lunar | Gegorian | Hijri |
 | ------ | ------ | ------ |

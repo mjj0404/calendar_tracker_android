@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_upcoming_event"
-        android:name="com.example.calendartracker.ui.event.EventFragment"
+        android:name="com.bitjam.calendartracker.ui.event.EventFragment"
         android:label="@string/title_upcoming_event"
         tools:layout="@layout/fragment_event" >
         <action
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_records"
-        android:name="com.example.calendartracker.ui.record.RecordFragment"
+        android:name="com.bitjam.calendartracker.ui.record.RecordFragment"
         android:label="@string/title_records"
         tools:layout="@layout/fragment_record" >
         <action
@@ -29,13 +29,13 @@
 
     <fragment
         android:id="@+id/navigation_setting"
-        android:name="com.example.calendartracker.ui.setting.SettingFragment"
+        android:name="com.bitjam.calendartracker.ui.setting.SettingFragment"
         android:label="@string/title_setting"
         tools:layout="@layout/fragment_setting" />
 
     <fragment
         android:id="@+id/navigation_edit_record"
-        android:name="com.example.calendartracker.ui.record.EditRecordFragment"
+        android:name="com.bitjam.calendartracker.ui.record.EditRecordFragment"
         tools:layout="@layout/fragment_edit_record" >
         <action
             android:id="@+id/action_navigation_edit_record_to_navigation_records"
